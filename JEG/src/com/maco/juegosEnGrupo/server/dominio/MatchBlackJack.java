@@ -1,6 +1,7 @@
 package com.maco.juegosEnGrupo.server.dominio;
 
 import java.io.IOException;
+import java.util.Hashtable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,9 +15,13 @@ public class MatchBlackJack extends Match {
 	public static Baraja baraja[];
 	private User userWithTurn;
 	
+	private Hashtable <Integer,Carta[]> manos;
 	
 	public MatchBlackJack(Game game) {
 		super(game);
+		
+		//CREAR TAPETE
+		manos= new Hashtable <Integer,Carta[]>();
 		// TODO Auto-generated constructor stub
 	}
 
