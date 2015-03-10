@@ -11,7 +11,7 @@ import edu.uclm.esi.common.server.domain.User;
 public class MatchBlackJack extends Match {
 	public static int BLACK_JACK = 1;
 	//public static char X='X', O='O', WHITE = ' ';
-	public static Baraja [6];
+	public static Baraja baraja[];
 	private User userWithTurn;
 	
 	
