@@ -8,15 +8,15 @@ import org.json.JSONObject;
 
 import edu.uclm.esi.common.jsonMessages.JSONMessage;
 import edu.uclm.esi.common.server.domain.User;
-
+import java.util.*;
 public class MatchBlackJack extends Match {
 	public static int BLACK_JACK = 1;
 	//public static char X='X', O='O', WHITE = ' ';
 	public static Baraja baraja[];
 	private User userWithTurn;
 	
-	private Hashtable <Integer,Carta[]> manos;
-	private Hashtable <Integer,Carta> tapeteCartas;
+	
+	private Hashtable <Integer,ArrayList<Carta>> tapeteCartas;
 	private int [] tapetePuntuAcum;
 	public MatchBlackJack(Game game) {
 		super(game);

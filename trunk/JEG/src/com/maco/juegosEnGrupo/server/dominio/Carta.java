@@ -14,6 +14,9 @@ public class Carta {
 		this.numero = numero;
 		this.figura = figura;
 	}
+	public Carta(){
+		
+	}
 
 	public String getPalo() {
 		return palo;
