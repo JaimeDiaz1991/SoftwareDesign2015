@@ -21,7 +21,8 @@ public class MatchBlackJack extends Match {
 		super(game);
 		
 		//CREAR TAPETE
-		manos= new Hashtable <Integer,Carta[]>();
+		manos = new Hashtable <Integer,Carta[]>();
+		
 		// TODO Auto-generated constructor stub
 	}
 
