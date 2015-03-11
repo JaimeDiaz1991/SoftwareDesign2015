@@ -24,9 +24,12 @@ public class MatchBlackJack extends Match {
 		//CREAR TAPETE
 		//tapeteCartas = new Carta[5][2];
 		tapetePuntuAcum = new int[5];
-		for (int i=0; i<5; i++)
-			for (int j=0; j<2; j++)
-				tapeteCartas.put(i, null);
+		for (int i=0; i<5; i++){
+			tapeteCartas.put(i, new ArrayList<Carta>());
+			for (int j=0; j<2; j++){
+				tapeteCartas.get(i).add(new Carta());
+			}
+		}
 		// TODO Auto-generated constructor stub
 	}
 
