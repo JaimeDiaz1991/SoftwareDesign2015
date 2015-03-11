@@ -16,13 +16,17 @@ public class MatchBlackJack extends Match {
 	private User userWithTurn;
 	
 	private Hashtable <Integer,Carta[]> manos;
-	
+	private Hashtable <Integer,Carta> tapeteCartas;
+	private int [] tapetePuntuAcum;
 	public MatchBlackJack(Game game) {
 		super(game);
 		
 		//CREAR TAPETE
-		manos = new Hashtable <Integer,Carta[]>();
-		
+		//tapeteCartas = new Carta[5][2];
+		tapetePuntuAcum = new int[5];
+		for (int i=0; i<5; i++)
+			for (int j=0; j<2; j++)
+				tapeteCartas.put(i, null);
 		// TODO Auto-generated constructor stub
 	}
 
