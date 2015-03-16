@@ -10,7 +10,7 @@ import org.json.JSONObject;
 public abstract class JSONMessage {
 	public static final String USER_ANDROID = "USER_ANDROID";
 	public static final String USER_GWT = "USER_GWT";
-	public static final String USER_RMI = "USER_RMI";
+	//public static final String USER_RMI = "USER_RMI";
 	
 	private boolean isCommand;
 	

@@ -5,6 +5,7 @@ public class Carta {
 	public String palo;
 	public int numero;
 	public boolean figura;
+	public boolean estaEnBaraja;
 	
 	
 
@@ -13,6 +14,7 @@ public class Carta {
 		this.palo = palo;
 		this.numero = numero;
 		this.figura = figura;
+		estaEnBaraja = true;
 	}
 	public Carta(){
 		
@@ -34,4 +36,11 @@ public class Carta {
 		this.numero = numero;
 	}
 	
+	public boolean getestaEnBaraja() {
+		return estaEnBaraja;
+	}
+
+	public void setestaEnBaraja(int numero) {
+		this.estaEnBaraja = estaEnBaraja;
+	}
 }
