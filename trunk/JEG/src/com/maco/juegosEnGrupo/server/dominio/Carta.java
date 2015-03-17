@@ -40,7 +40,7 @@ public class Carta {
 		return estaEnBaraja;
 	}
 
-	public void setestaEnBaraja(int numero) {
+	public void setestaEnBaraja(boolean estaEnBaraja) {
 		this.estaEnBaraja = estaEnBaraja;
 	}
 }

@@ -7,7 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.maco.blackjack.jsonMessage.BlackJackRequestCard;
-import com.maco.tresenraya.jsonMessages.TresEnRayaMovement;
+import com.maco.juegosEnGrupo.server.dominio.Carta;
 
 import edu.uclm.esi.common.jsonMessages.ErrorMessage;
 import edu.uclm.esi.common.jsonMessages.JSONMessage;
@@ -15,6 +15,8 @@ import edu.uclm.esi.common.server.domain.User;
 import edu.uclm.esi.common.server.sockets.Notifier;
 
 import java.util.*;
+
+
 public class MatchBlackJack extends Match {
 	public static int BLACK_JACK = 1;
 	private static int numeroBarajas = 1;
@@ -67,14 +69,16 @@ public class MatchBlackJack extends Match {
 		boolean finish=true;
 		while(finish){
 			int numeroBaraja = (int) (Math.random()*(4-1)+1);
-			int numeroCarta = (int) (Math.random()*(4-1)+1);
+			int numeroCarta = (int) (Math.random()*(12-1)+1);
+			int numeroPalo = (int) (Math.random()*(4-1)+1);
+			
 			JSONMessage result=null;
 			//ahora comprobamos si esta y si no la marcamos como que ya no esta en la baraja
-			if(comprobarEstaEnBaraja()){
-				
+			if(comprobarEstaEnBaraja(numeroBaraja, numeroCarta, numeroPalo)){
+				finish=true;
 			}
 			else{
-				
+				finish=false;
 			}
 		}
 		
@@ -94,6 +98,35 @@ public class MatchBlackJack extends Match {
 			Notifier.get().post(user, result);
 		} 
 		updateBoard(row, col, result);*/
+	}
+
+	private boolean comprobarEstaEnBaraja(int numeroBaraja, int numeroCarta, int numeroPalo) {
+		String palo;
+		Carta [] cartas;
+		
+		if(numeroPalo == 1){
+			palo = "picas";
+		}
+		else if(numeroPalo == 2){
+			palo = "diamantes";
+		}
+		else if(numeroPalo == 3){
+			palo = "corazones";
+		}
+		else{
+			palo = "treboles";
+		}
+		for(int i=0; i<numeroBarajas;i++){
+			cartas= (Carta[]) baraja[i].getCartas();
+			for(int j=0;j<cartas.length;j++){
+				if(cartas[j].getPalo().equals(palo) && cartas[j].getNumero()==numeroCarta && cartas[j].getestaEnBaraja() == true){
+					cartas[j].setestaEnBaraja(false);
+					baraja[i].setCartas(cartas);
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	@Override
