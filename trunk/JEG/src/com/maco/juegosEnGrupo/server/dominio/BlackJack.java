@@ -17,15 +17,15 @@ import edu.uclm.esi.common.server.sockets.Notifier;
 import java.util.*;
 
 
-public class MatchBlackJack extends Match {
-	public static int BLACK_JACK = 1;
+public class BlackJack extends Match {
+	public static int BLACK_JACK = 2;
 	private static int numeroBarajas = 1;
 	public static Baraja baraja[];
 	private User userWithTurn;
 	private Hashtable <Integer,ArrayList<Carta>> tapeteCartas;
 	private int [] tapetePuntuAcum;
 	
-	public MatchBlackJack(Game game) {
+	public BlackJack(Game game) {
 		super(game);
 		//creamos las barajas que tengamos elegidas en numeroBarajas
 		
