@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class Baraja {
 
-	public Carta cartas[];
+	public Carta cartas[]=new Carta[48];
 	
-	public void Baraja(){
+	public Baraja(){
 		
 		ArrayList<String> palos = new ArrayList<String>();
 		palos.add("picas");
@@ -15,7 +15,7 @@ public class Baraja {
 		palos.add("treboles");
 		boolean figura;
 		for(int i = 0; i < palos.size(); i++){
-			for(int j = 0; j < 12; j++){
+			for(int j = 1; j <= 12; j++){
 				if(j >= 10)
 					figura = true;
 				else
