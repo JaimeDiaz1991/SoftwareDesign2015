@@ -117,11 +117,11 @@ public class BlackJack extends Match {
 			palo = "treboles";
 		}
 		for(int i=0; i<numeroBarajas;i++){
-			cartas= (Carta[]) baraja[i].getCartas();
+			cartas= (Carta[]) barajas.get(i).getCartas();
 			for(int j=0;j<cartas.length;j++){
 				if(cartas[j].getPalo().equals(palo) && cartas[j].getNumero()==numeroCarta && cartas[j].getestaEnBaraja() == true){
 					cartas[j].setestaEnBaraja(false);
-					baraja[i].setCartas(cartas);
+					barajas.get(i).setCartas(cartas);
 					return true;
 				}
 			}
