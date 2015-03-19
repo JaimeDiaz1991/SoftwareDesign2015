@@ -14,7 +14,7 @@ import edu.uclm.esi.common.server.sockets.Notifier;
 public abstract class Match {
 	protected Vector<User> players;
 	protected Game game;
-	
+
 	public Match(Game game) {
 		this.game=game;
 		this.players=new Vector<User>();
