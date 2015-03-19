@@ -20,9 +20,9 @@ import java.util.*;
 public class BlackJack extends Match {
 	public static int BLACK_JACK = 2;
 	private static int numeroBarajas = 1;
-	public static Baraja baraja[];
+	public static ArrayList<Baraja> barajas= new ArrayList<Baraja>();
 	private User userWithTurn;
-	private Hashtable <Integer,ArrayList<Carta>> tapeteCartas;
+	private Hashtable <Integer,ArrayList<Carta>> tapeteCartas= new Hashtable<Integer,ArrayList<Carta>>();
 	private int [] tapetePuntuAcum;
 	
 	public BlackJack(Game game) {
@@ -30,7 +30,7 @@ public class BlackJack extends Match {
 		//creamos las barajas que tengamos elegidas en numeroBarajas
 		
 		for (int i=0; i<numeroBarajas; i++){
-			baraja [i] = new Baraja();
+			barajas.add(new Baraja());
 		}
 		//CREAR TAPETE
 		//tapeteCartas = new Carta[5][2];
