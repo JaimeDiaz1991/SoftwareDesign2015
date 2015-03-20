@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigationModel
+  ns = "http://schemas.android.com?import=com.android.tools.idea.editors.navigation.model.*">
+  <locations  
+    class = "java.util.ArrayList">
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "edu.uclm.esi.common.androidClient.activities.MainMenu"/>
+      <point      
+        x = "2080"      
+        y = "-160"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "edu.uclm.esi.common.androidClient.activities.LoginActivity"/>
+      <point      
+        x = "1760"      
+        y = "640"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "edu.uclm.esi.common.androidClient.activities.CreateAccountActivity"/>
+      <point      
+        x = "0"      
+        y = "0"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.maco.tresenraya.BlackJackActivity"/>
+      <point      
+        x = "960"      
+        y = "-160"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.maco.tresenraya.GameListActivity"/>
+      <point      
+        x = "160"      
+        y = "960"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.maco.tresenraya.TresEnRayaActivity"/>
+      <point      
+        x = "1120"      
+        y = "800"/>
+    </statePointEntry>
+  </locations>
+</navigationModel>
