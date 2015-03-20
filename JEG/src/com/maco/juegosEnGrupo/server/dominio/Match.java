@@ -62,6 +62,6 @@ public abstract class Match {
 
 	protected abstract void updateBoard(int row, int col, JSONMessage result) throws JSONException, IOException;
 
-	protected abstract void requestCard(User user, JSONObject jsoMovement)throws Exception;
+	//protected abstract void requestCard(User user, JSONObject jsoMovement)throws Exception;
 	
 }
