@@ -1,0 +1,6 @@
+C:\Users\Jaime\Documents\proyecto_DS\TresEnRaya1\app\build\intermediates\classes\debug
+C:\Users\Jaime\Documents\proyecto_DS\TresEnRaya1\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-78b7ad78673855ee2c0ecf6f0d31561cb869f484.jar
+C:\Users\Jaime\Documents\proyecto_DS\TresEnRaya1\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-b194ef9d3d7e9fbb495772800bd75c15e233ecc8.jar
+C:\Users\Jaime\Documents\proyecto_DS\TresEnRaya1\app\build\intermediates\pre-dexed\debug\classes-d7c6eb10f7fae33b553714eeb8348f32c0a91747.jar
+C:\Users\Jaime\Documents\proyecto_DS\TresEnRaya1\app\build\intermediates\pre-dexed\debug\classes-ed08c59f9c0dc3a18e1b5f6c8aa0dbfbbb9224bf.jar
+C:\Users\Jaime\Documents\proyecto_DS\TresEnRaya1\app\build\intermediates\pre-dexed\debug\classes-08e1e8361119f24be2528a23747a580d87e96df9.jar
