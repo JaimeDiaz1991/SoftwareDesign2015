@@ -61,7 +61,6 @@ public class BlackJack extends Match {
 		return this.userWithTurn.equals(user);
 	}
 
-	@Override
 	protected void requestCard(User user, JSONObject jsoMovement) throws Exception {
 		if (!jsoMovement.get("type").equals(BlackJackRequestCard.class.getSimpleName())) {
 			throw new Exception("Can't request more cards");

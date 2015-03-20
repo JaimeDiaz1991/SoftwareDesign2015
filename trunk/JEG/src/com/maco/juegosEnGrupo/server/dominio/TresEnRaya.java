@@ -129,13 +129,4 @@ public class TresEnRaya extends Match {
 			}
 		}
 	}
-	
-	
-	//metodos del blackjack que al ser abstractos se heredan
-	@Override
-	protected void requestCard(User user, JSONObject jsoMovement)
-			throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
 }
