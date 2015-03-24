@@ -20,6 +20,7 @@ import java.util.*;
 public class BlackJack extends Match {
 	public static int BLACK_JACK = 2;
 	private static int numeroBarajas = 1;
+	private static String squares[][];
 	public static ArrayList<Baraja> barajas= new ArrayList<Baraja>();
 	private User userWithTurn;
 	private Hashtable <Integer,ArrayList<Carta>> tapeteCartas= new Hashtable<Integer,ArrayList<Carta>>();
@@ -27,6 +28,7 @@ public class BlackJack extends Match {
 	
 	public BlackJack(Game game) {
 		super(game);
+		
 		//creamos las barajas que tengamos elegidas en numeroBarajas
 		
 		for (int i=0; i<numeroBarajas; i++){
@@ -34,13 +36,18 @@ public class BlackJack extends Match {
 		}
 		//CREAR TAPETE
 		//tapeteCartas = new Carta[5][2];
-		tapetePuntuAcum = new int[5];
+		/*tapetePuntuAcum = new int[5];
 		for (int i=0; i<5; i++){
 			tapeteCartas.put(i, new ArrayList<Carta>());
 			for (int j=0; j<2; j++){
 				tapeteCartas.get(i).add(new Carta());
 			}
-		}
+		}*/
+		//CREAR TAPETE
+		squares=new String[5][2];
+		for (int i=0;i<5;i++)
+			for(int j=0;i<2;j++)
+				squares[i][j]="";
 		// TODO Auto-generated constructor stub
 	}
 
