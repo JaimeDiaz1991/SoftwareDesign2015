@@ -16,6 +16,10 @@ public class Carta {
 		this.figura = figura;
 		estaEnBaraja = true;
 	}
+	@Override
+	public String toString() {
+		return "Carta [palo=" + palo + ", numero=" + numero + "]";
+	}
 	public Carta(){
 		
 	}
@@ -44,3 +48,4 @@ public class Carta {
 		this.estaEnBaraja = estaEnBaraja;
 	}
 }
+

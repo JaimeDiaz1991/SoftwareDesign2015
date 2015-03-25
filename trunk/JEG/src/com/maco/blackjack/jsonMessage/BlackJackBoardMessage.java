@@ -1,4 +1,4 @@
-package com.maco.tresenraya.jsonMessages;
+package com.maco.blackjack.jsonMessage;
 
 import java.util.StringTokenizer;
 
@@ -84,3 +84,4 @@ public class BlackJackBoardMessage extends JSONMessage{
 	}
 
 }
+

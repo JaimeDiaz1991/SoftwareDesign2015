@@ -65,3 +65,4 @@ public abstract class Match {
 	//protected abstract void requestCard(User user, JSONObject jsoMovement)throws Exception;
 	
 }
+
