@@ -2,20 +2,28 @@
 
 package com.maco.juegosEnGrupo.server.dominio;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Random;
+import java.util.Iterator;
+
+
+
+
 import java.util.Vector;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.maco.blackjack.jsonMessage.BJWaitingMessage;
+import com.maco.blackjack.jsonMessage.BlackJackBoardMessage;
 import com.maco.blackjack.jsonMessage.BlackJackRequestCard;
 import com.maco.juegosEnGrupo.server.dominio.Carta;
+
+
+
 import com.maco.tresenraya.jsonMessages.TresEnRayaBoardMessage;
-import com.maco.tresenraya.jsonMessages.TresEnRayaWaitingMessage;
 
 import edu.uclm.esi.common.jsonMessages.ErrorMessage;
 import edu.uclm.esi.common.jsonMessages.JSONMessage;
@@ -24,7 +32,7 @@ import edu.uclm.esi.common.server.sockets.Notifier;
 
 import java.util.*;
 
-import javax.swing.Timer;
+
 
 
 public class BlackJack extends Match {
@@ -60,8 +68,8 @@ public class BlackJack extends Match {
 	protected void postAddUser(User user) {
 		
 		if (cuentaAtras()==true) {
-			JSONMessage jsTurn=new TresEnRayaWaitingMessage("Match ready. You have the turn.");
-			JSONMessage jsNoTurn=new TresEnRayaWaitingMessage("Match ready. Wait for the opponent to move.");
+			JSONMessage jsTurn=new BJWaitingMessage("Match ready. You have the turn.");
+			JSONMessage jsNoTurn=new BJWaitingMessage("Match ready. Wait for the opponent to move.");
 			int numeroJugadores=players.size();
 			try{
 				Notifier.get().post(this.players.get(0), jsTurn);
@@ -73,27 +81,17 @@ public class BlackJack extends Match {
 			}
 			try {
 				//aqui se pasaria el toString del tapete a cada jugador
-				JSONMessage jsBoard=new TresEnRayaBoardMessage(this.toString());
-				Notifier.get().post(this.players.get(0), jsBoard);
-				Notifier.get().post(this.players.get(1), jsBoard);
+				JSONMessage jsBoard=new BlackJackBoardMessage(this.toString());
+				Notifier.get().post(this.players, jsBoard);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else {
-			JSONMessage jsm=new TresEnRayaWaitingMessage("Waiting for one more player");
-			try {
-				Notifier.get().post(this.players.get(0), jsm);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
+		} 
 	}
 	
 	private boolean cuentaAtras() {
-		JSONMessage jsm=new TresEnRayaWaitingMessage("El juego comenzará en 2 minutos");
+		JSONMessage jsm=new BJWaitingMessage("El juego comenzará en 2 minutos");
 		try {
 			Notifier.get().post(this.players, jsm);	
 		}catch (IOException e) {
@@ -108,8 +106,21 @@ public class BlackJack extends Match {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+		String r="";
+		Enumeration<ArrayList<Carta>> iter=tapeteCartas.elements();
+		Iterator<Carta> cartas = null;
+		Carta c = null;
+		while(iter.nextElement() != null)
+			cartas=iter.nextElement().iterator();
+				while(cartas.hasNext())
+					c=cartas.next();
+					r+=c.toString();
+		r+="#" + this.players.get(0).getEmail() + "#";
+		if (this.players.size()==2) {
+			r+=this.players.get(1).getEmail() + "#";
+			r+=this.userWithTurn.getEmail();
+		}
+		return r;
 	}
 
 	@Override
@@ -121,15 +132,54 @@ public class BlackJack extends Match {
 		if (!jsoMovement.get("type").equals(BlackJackRequestCard.class.getSimpleName())) {
 			throw new Exception("Can't request more cards");
 		}
+		JSONMessage result=null;
 		boolean finish=true;
-		while(finish){
-			Carta carta= elegirCartaAleatoria();
-			//Añadir carta al tapete del jugador
-			
-			JSONMessage result=null;
-
+		Iterator<User> jugadores;
+		String cadena;
+		jugadores = players.iterator();
+		User u = null;
+		int jugElegido = -1;
+		
+		if(calcularSumaCartas(players, tapeteCartas)<=21){
+			Carta carta = elegirCartaAleatoria();
+			while (jugadores.hasNext()) {
+				u = jugadores.next();
+				if (u == userWithTurn) {
+					break;
+				} else {
+					jugElegido++;
+				}
+			}
+			tapeteCartas.get(jugElegido).add(carta);
+			updateBoard(carta,jugElegido, result);
 		}
+		else{
+			
+			result = new BlackJackRequestCard("You got more than 21");
+			Notifier.get().post(userWithTurn, result);
+		}
+	}
 
+	private int calcularSumaCartas(Vector<User> players,
+			Hashtable<Integer, ArrayList<Carta>> tapeteCartas2) {
+		Iterator<User> jugadores = players.iterator();
+		Iterator<Carta> itCartas;
+		int suma = 0;
+		User u = null;
+		int jugElegido = -1;
+		while (jugadores.hasNext()) {
+			u = jugadores.next();
+			if (u == userWithTurn) {
+				break;
+			} else {
+				jugElegido++;
+			}
+		}
+		itCartas = tapeteCartas.get(jugElegido).iterator();
+		while(itCartas.hasNext()){
+			suma += itCartas.next().getNumero();
+		}
+		return suma;
 	}
 
 	private Carta elegirCartaAleatoria() {
@@ -152,9 +202,22 @@ public class BlackJack extends Match {
 		return carta;
 	}
 
-	@Override
-	protected void updateBoard(int row, int col, JSONMessage result) throws JSONException, IOException {
-		
+	protected void updateBoard(Carta carta, int jugElegido, JSONMessage result) throws JSONException, IOException {
+		if (result==null) {
+			Iterator<User> itUser;
+			itUser = players.iterator();
+			User u;
+			while(itUser.hasNext()){
+				u = itUser.next();
+				if(u == userWithTurn && itUser.hasNext()){
+					userWithTurn = itUser.next();
+				}else{
+					//aqui se llamaria a un metodo que calculara las cartas de la banca y pagara o quitara el dinero de los usuarios
+				}
+			}
+			result=new TresEnRayaBoardMessage(this.toString());
+			Notifier.get().post(this.players, result);
+		}
 
 	}
 
@@ -162,8 +225,16 @@ public class BlackJack extends Match {
 	protected void postMove(User user, JSONObject jsoMovement) throws Exception {	
 	}
 
+	@Override
+	protected void updateBoard(int row, int col, JSONMessage result)
+			throws JSONException, IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 
 }
+
 

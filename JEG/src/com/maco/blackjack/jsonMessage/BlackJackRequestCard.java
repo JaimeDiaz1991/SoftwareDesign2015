@@ -5,19 +5,16 @@ import edu.uclm.esi.common.jsonMessages.JSONable;
 
 public class BlackJackRequestCard extends JSONMessage{
 	@JSONable
-	private boolean request;
+	private String test;
 	
-	public BlackJackRequestCard(boolean request) {
-		super(true);
-		this.request = request;
+	public BlackJackRequestCard(String test) {
+		super(false);
+		this.test = test;
 		
 	}
 	
-	public boolean getRow() {
-		return request;
+	public String getTest() {
+		return test;
 	}
 
-	public boolean getCol() {
-		return request;
-	}
 }
