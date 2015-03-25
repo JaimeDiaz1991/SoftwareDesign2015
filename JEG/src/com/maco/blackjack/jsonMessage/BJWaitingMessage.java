@@ -5,7 +5,7 @@ import edu.uclm.esi.common.jsonMessages.JSONable;
 
 public class BJWaitingMessage extends JSONMessage {
 
-	
+	//ijgadsñfkjahñsdfkjahdskmfbasldjf
 		@JSONable
 		private String text;
 		
