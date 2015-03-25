@@ -1,5 +1,3 @@
-
-
 package com.maco.juegosEnGrupo.server.dominio;
 
 import java.io.IOException;
@@ -37,7 +35,7 @@ import java.util.*;
 
 public class BlackJack extends Match {
 	public static int BLACK_JACK = 2;
-	private static int numeroBarajas = 1;
+	private static int numeroBarajas = 4;
 	public static ArrayList<Baraja> barajas= new ArrayList<Baraja>();
 	private User userWithTurn;
 	private Hashtable <Integer,ArrayList<Carta>> tapeteCartas= new Hashtable<Integer,ArrayList<Carta>>();
@@ -215,7 +213,7 @@ public class BlackJack extends Match {
 					//aqui se llamaria a un metodo que calculara las cartas de la banca y pagara o quitara el dinero de los usuarios
 				}
 			}
-			result=new TresEnRayaBoardMessage(this.toString());
+			result=new BlackJackBoardMessage(this.toString());
 			Notifier.get().post(this.players, result);
 		}
 
