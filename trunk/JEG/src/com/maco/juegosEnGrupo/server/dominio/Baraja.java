@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Baraja {
 
-	public Carta cartas[]=new Carta[48];
+	public Carta cartas[]=new Carta[52];
 	
 	public Baraja(){
 		
