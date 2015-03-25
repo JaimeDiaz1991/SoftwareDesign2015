@@ -14,13 +14,15 @@ public class Baraja {
 		palos.add("corazones");
 		palos.add("treboles");
 		boolean figura;
+		int cont = 0;
 		for(int i = 0; i < palos.size(); i++){
-			for(int j = 1; j <= 12; j++){
+			for(int j = 1; j <= 13; j++){
 				if(j >= 10)
 					figura = true;
 				else
 					figura = false;
-				cartas[i] = new Carta(palos.get(i), j, figura);
+				cartas[cont] = new Carta(palos.get(i), j, figura);
+				cont++;
 			}
 		}
 	}
