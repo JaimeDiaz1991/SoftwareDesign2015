@@ -56,7 +56,7 @@ public class BlackJack extends Match {
 			User user;
 			JSONObject json;
 			for (int j=0; j<2; j++){
-					tapeteCartas.get(i).add(elegirCartaAleatoria());			
+					tapeteCartas.get(i).add(new Carta());			
 			}
 		}
 		// TODO Auto-generated constructor s
