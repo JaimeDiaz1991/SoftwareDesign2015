@@ -65,10 +65,11 @@ public class BlackJack extends Match {
 	@Override
 	protected void postAddUser(User user) {
 		
-		if (cuentaAtras()==true) {
+		//if (cuentaAtras()==true) {
 			JSONMessage jsTurn=new BJWaitingMessage("Match ready. You have the turn.");
 			JSONMessage jsNoTurn=new BJWaitingMessage("Match ready. Wait for the opponent to move.");
 			int numeroJugadores=players.size();
+			this.userWithTurn=this.players.get(0);
 			try{
 				Notifier.get().post(this.players.get(0), jsTurn);
 				for(int i=1; i<numeroJugadores;i++){
@@ -80,12 +81,14 @@ public class BlackJack extends Match {
 			try {
 				//aqui se pasaria el toString del tapete a cada jugador
 				JSONMessage jsBoard=new BlackJackBoardMessage(this.toString());
-				Notifier.get().post(this.players, jsBoard);
+				for(int i=1; i<numeroJugadores;i++){
+				Notifier.get().post(this.players.get(i), jsBoard);
+				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} 
+		//} 
 	}
 	
 	private boolean cuentaAtras() {
