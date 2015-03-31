@@ -108,22 +108,24 @@ public class BlackJack extends Match {
 	@Override
 	public String toString() {
 		String r="";
-		Enumeration<ArrayList<Carta>> iter=tapeteCartas.elements();
-		Iterator<Carta> cartas = null;
-		Carta c = null;
-		while(iter.nextElement() != null)
-			cartas=iter.nextElement().iterator();
-				while(cartas.hasNext())
-					c=cartas.next();
-					r+=c.toString();
-		r+="#" + this.players.get(0).getEmail() + "#";
-		if (this.players.size()==2) {
-			r+=this.players.get(1).getEmail() + "#";
-			r+=this.userWithTurn.getEmail();
+		ArrayList<Carta> cartas = null;
+		for(int i=0;i<tapeteCartas.size();i++){
+			cartas = tapeteCartas.get(i);
+			for(int j=0; j<cartas.size();j++){
+				r+=cartas.get(j).toString();
+			}
 		}
-		return r;
-	}
+			r+="#" + this.players.get(0).getEmail() + "#";
+			if (this.players.size()>=2) {
+				for(int k=0;k<players.size();k++){
+					r+=this.players.get(k).getEmail() + "#";
+				}
+				r+=this.userWithTurn.getEmail();
+			}
+			return r;
+		}
 
+		
 	@Override
 	protected boolean isTheTurnOf(User user) {
 		return this.userWithTurn.equals(user);
