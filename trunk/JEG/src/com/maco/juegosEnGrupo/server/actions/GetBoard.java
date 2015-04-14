@@ -2,6 +2,7 @@ package com.maco.juegosEnGrupo.server.actions;
 
 import org.json.JSONException;
 
+import com.maco.blackjack.jsonMessage.BlackJackBoardMessage;
 import com.maco.juegosEnGrupo.server.dominio.Game;
 import com.maco.juegosEnGrupo.server.dominio.Match;
 import com.maco.tresenraya.jsonMessages.TresEnRayaBoardMessage;
@@ -43,7 +44,13 @@ public class GetBoard extends JSONAction {
 			jso=new ErrorMessage(this.exception.getMessage());
 		else {
 			try {
+				//NUEVO 14_04
+				if(idGame==2)
+					jso=new BlackJackBoardMessage(match.toString());
+				else if(idGame==1)
 				jso=new TresEnRayaBoardMessage(match.toString());
+				else
+					jso= null;
 			} catch (JSONException e) {
 				jso=new ErrorMessage(this.exception.getMessage());
 			}

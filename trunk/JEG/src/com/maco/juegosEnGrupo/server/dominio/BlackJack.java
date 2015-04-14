@@ -21,7 +21,6 @@ import com.maco.juegosEnGrupo.server.dominio.Carta;
 
 
 
-import com.maco.tresenraya.jsonMessages.TresEnRayaBoardMessage;
 
 import edu.uclm.esi.common.jsonMessages.ErrorMessage;
 import edu.uclm.esi.common.jsonMessages.JSONMessage;
@@ -54,7 +53,7 @@ public class BlackJack extends Match {
 		for (int i=0; i<5; i++){
 			tapeteCartas.put(i, new ArrayList<Carta>());
 			for (int j=0; j<2; j++){
-					tapeteCartas.get(i).add(new Carta());			
+					tapeteCartas.get(i).add(new Carta());		
 			}
 		}
 	}
@@ -105,12 +104,23 @@ public class BlackJack extends Match {
 	@Override
 	public String toString() {
 		String r="";
-		ArrayList<Carta> cartas = null;
-		for(int i=0;i<tapeteCartas.size();i++){
-			cartas = tapeteCartas.get(i);
-			for(int j=0; j<cartas.size();j++){
-				r+=cartas.get(j).toString();
-			}
+		int acumu=0;
+		for(int i=0;i<this.tapeteCartas.size();i++){
+			for(int j=0; j<this.tapeteCartas.get(i).size();j++){
+				if(this.tapeteCartas.get(i).size()==2)	
+					r+=this.tapeteCartas.get(i).get(j).toString();
+				else{
+					//r+=this.tapeteCartas.get(i).get(0).toString();
+					if(j<this.tapeteCartas.get(i).size()-1)
+						acumu=acumu+this.tapeteCartas.get(i).get(j).getNumero();
+				
+				r+=Integer.toString(acumu);
+				r+=this.tapeteCartas.get(i).get(this.tapeteCartas.get(i).size()-1).toString();
+				}
+				r+="_";
+				}
+			
+			r+="-";
 		}
 			r+="#" + this.players.get(0).getEmail() + "#";
 			if (this.players.size()>=2) {
