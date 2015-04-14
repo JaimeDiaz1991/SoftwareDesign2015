@@ -11,7 +11,7 @@ import edu.uclm.esi.common.jsonMessages.JSONable;
 public class BlackJackBoardMessage extends JSONMessage{
 	
 	@JSONable
-	private String mano;
+	private String tapete;
 	@JSONable
 	private String player1;
 	@JSONable
@@ -28,7 +28,7 @@ public class BlackJackBoardMessage extends JSONMessage{
 	public BlackJackBoardMessage(String board) throws JSONException {
 		super(false);
 		StringTokenizer st=new StringTokenizer(board, "#");
-		this.mano=st.nextToken();
+		this.tapete=st.nextToken();
 		this.player1=st.nextToken();
 		if (st.hasMoreTokens()) {
 			this.player2=st.nextToken();
@@ -38,10 +38,10 @@ public class BlackJackBoardMessage extends JSONMessage{
 	
 	public BlackJackBoardMessage(JSONObject jso) throws JSONException {
 		super(false);
-		this.mano=jso.getString("mano");
+		this.tapete=jso.getString("tapete");
 		this.player1=jso.getString("player1");
 		//BANCA
-		this.mano=jso.getString("mano");
+		this.tapete=jso.getString("tapete");
 		this.player5=jso.getString("player5");
 		
 		if (jso.optString("player2").length()>0) {
@@ -58,8 +58,8 @@ public class BlackJackBoardMessage extends JSONMessage{
 		}
 	}
 
-	public String getmano() {
-		return mano;
+	public String gettapete() {
+		return tapete;
 	}
 	
 	public String getPlayer1() {
