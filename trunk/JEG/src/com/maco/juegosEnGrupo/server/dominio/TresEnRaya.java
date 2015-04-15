@@ -6,6 +6,7 @@ import java.util.Random;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.maco.blackjack.jsonMessage.BlackJackBoardMessage;
 import com.maco.tresenraya.jsonMessages.TresEnRayaBoardMessage;
 import com.maco.tresenraya.jsonMessages.TresEnRayaMatchReadyMessage;
 import com.maco.tresenraya.jsonMessages.TresEnRayaMovement;
