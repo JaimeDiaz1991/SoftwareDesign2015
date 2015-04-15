@@ -11,7 +11,7 @@ import edu.uclm.esi.common.jsonMessages.JSONable;
 public class BlackJackBoardMessage extends JSONMessage{
 	
 	@JSONable
-	private String tapete;
+	private String tapete [][];
 	@JSONable
 	private String [] players = new String [5];
 	private String userWithTurn;
@@ -19,8 +19,18 @@ public class BlackJackBoardMessage extends JSONMessage{
 	public BlackJackBoardMessage(String board) throws JSONException {
 		super(false);
 		int cont = 0;
+		int cont2;
 		StringTokenizer st=new StringTokenizer(board, "#");
-		this.tapete=st.nextToken();
+		StringTokenizer st1=new StringTokenizer(board, "_");
+		StringTokenizer st2=new StringTokenizer(board, "-");
+		while(st1.hasMoreTokens()){
+			cont2=0;
+			while(st2.hasMoreTokens()){
+				this.tapete[cont][cont2]=st.nextToken();
+				cont2++;
+			}
+			cont++;
+		}
 		this.players[0]=st.nextToken();
 		while (st.hasMoreTokens()) {
 			this.players[cont]=st.nextToken();
@@ -31,10 +41,10 @@ public class BlackJackBoardMessage extends JSONMessage{
 	
 	public BlackJackBoardMessage(JSONObject jso) throws JSONException {
 		super(false);
-		this.tapete=jso.getString("tapete");
+		//al no ser un string no puede hacerse asi
+		//this.tapete=jso.getString("tapete");
 		this.players[0]=jso.getString("player1");
 		//BANCA
-		this.tapete=jso.getString("tapete");
 		this.players[4]=jso.getString("player5");
 		
 		if (jso.optString("player2").length()>0) {
@@ -51,7 +61,7 @@ public class BlackJackBoardMessage extends JSONMessage{
 		}
 	}
 
-	public String gettapete() {
+	public String[][] getTapete() {
 		return tapete;
 	}
 	
