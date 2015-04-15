@@ -48,7 +48,7 @@ public class GetBoard extends JSONAction {
 				if(idGame==2)
 					jso=new BlackJackBoardMessage(match.toString());
 				else if(idGame==1)
-				jso=new TresEnRayaBoardMessage(match.toString());
+					jso=new TresEnRayaBoardMessage(match.toString());
 				else
 					jso= null;
 			} catch (JSONException e) {

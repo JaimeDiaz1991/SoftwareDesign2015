@@ -21,6 +21,7 @@ import com.maco.juegosEnGrupo.server.dominio.Carta;
 
 
 
+import com.maco.tresenraya.jsonMessages.TresEnRayaWaitingMessage;
 
 import edu.uclm.esi.common.jsonMessages.ErrorMessage;
 import edu.uclm.esi.common.jsonMessages.JSONMessage;
@@ -61,7 +62,7 @@ public class BlackJack extends Match {
 	@Override
 	protected void postAddUser(User user) {
 		
-		//if (cuentaAtras()==true) {
+		if (this.players.size()==2) {
 			JSONMessage jsTurn=new BJWaitingMessage("Match ready. You have the turn.");
 			JSONMessage jsNoTurn=new BJWaitingMessage("Match ready. Wait for the opponent to move.");
 			int numeroJugadores=players.size();
@@ -84,7 +85,16 @@ public class BlackJack extends Match {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		//} 
+		} 
+		else {
+			JSONMessage jsm=new TresEnRayaWaitingMessage("Waiting for one more player");
+			try {
+				Notifier.get().post(this.players.get(0), jsm);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	private boolean cuentaAtras() {
