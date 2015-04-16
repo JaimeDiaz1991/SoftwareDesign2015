@@ -51,7 +51,7 @@ public class BlackJack extends Match {
 		}
 		//CREAR TAPETE
 		tapetePuntuAcum = new int[5];
-		for (int i=0; i<5; i++){
+		for (int i=0; i<tapeteCartas.size(); i++){
 			tapeteCartas.put(i, new ArrayList<Carta>());
 			for (int j=0; j<2; j++){
 					tapeteCartas.get(i).add(new Carta());		
@@ -79,6 +79,7 @@ public class BlackJack extends Match {
 			try {
 				//aqui se pasaria el toString del tapete a cada jugador
 				//Rellenas segun los jugadores las cartas
+				rellenarTapete();
 				JSONMessage jsBoard=new BlackJackBoardMessage(this.toString());
 				for(int i=1; i<numeroJugadores;i++){
 				Notifier.get().post(this.players.get(i), jsBoard);
@@ -100,6 +101,14 @@ public class BlackJack extends Match {
 		}
 	}
 	
+	private void rellenarTapete() {
+		for(int i=0;i<tapeteCartas.size();i++){
+			tapeteCartas.get(i).add(elegirCartaAleatoria());
+			tapeteCartas.get(i).add(elegirCartaAleatoria());
+		}
+		
+	}
+
 	private boolean cuentaAtras() {
 		JSONMessage jsm=new BJWaitingMessage("El juego comenzará en 2 minutos");
 		try {
@@ -127,11 +136,11 @@ public class BlackJack extends Match {
 					if(j<this.tapeteCartas.get(i).size()-1)
 						acumu=acumu+this.tapeteCartas.get(i).get(j).getNumero();
 				
-				r+=Integer.toString(acumu);
-				r+=this.tapeteCartas.get(i).get(this.tapeteCartas.get(i).size()-1).toString();
+					r+=Integer.toString(acumu);
+					r+=this.tapeteCartas.get(i).get(this.tapeteCartas.get(i).size()-1).toString();
 				}
 				r+="_";
-				}
+			}
 			
 			r+="-";
 		}
