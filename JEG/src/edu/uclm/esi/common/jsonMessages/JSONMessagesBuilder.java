@@ -3,6 +3,8 @@ package edu.uclm.esi.common.jsonMessages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.maco.blackjack.jsonMessage.BJWaitingMessage;
+import com.maco.blackjack.jsonMessage.BlackJackBoardMessage;
 import com.maco.tresenraya.jsonMessages.GameListMessage;
 import com.maco.tresenraya.jsonMessages.TresEnRayaBoardMessage;
 import com.maco.tresenraya.jsonMessages.TresEnRayaWaitingMessage;
@@ -26,6 +28,11 @@ public class JSONMessagesBuilder {
 		if (jso.get("type").equals(TresEnRayaBoardMessage.class.getSimpleName()))
 			return new TresEnRayaBoardMessage(jso);
 		if (jso.get("type").equals(TresEnRayaWaitingMessage.class.getSimpleName()))
+			return new TresEnRayaWaitingMessage(jso.getString("text"));
+		//Nuevo
+		if (jso.get("type").equals(BlackJackBoardMessage.class.getSimpleName()))
+			return new TresEnRayaBoardMessage(jso);
+		if (jso.get("type").equals(BJWaitingMessage.class.getSimpleName()))
 			return new TresEnRayaWaitingMessage(jso.getString("text"));
 		return null;
 	}

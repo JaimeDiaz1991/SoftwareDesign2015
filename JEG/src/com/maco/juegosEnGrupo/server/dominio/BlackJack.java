@@ -21,7 +21,7 @@ import com.maco.juegosEnGrupo.server.dominio.Carta;
 
 
 
-import com.maco.tresenraya.jsonMessages.TresEnRayaWaitingMessage;
+
 
 import edu.uclm.esi.common.jsonMessages.ErrorMessage;
 import edu.uclm.esi.common.jsonMessages.JSONMessage;
@@ -63,6 +63,7 @@ public class BlackJack extends Match {
 	protected void postAddUser(User user) {
 		
 		if (this.players.size()==2) {
+			System.out.println(players.size());
 			JSONMessage jsTurn=new BJWaitingMessage("Match ready. You have the turn.");
 			JSONMessage jsNoTurn=new BJWaitingMessage("Match ready. Wait for the opponent to move.");
 			int numeroJugadores=players.size();
@@ -77,6 +78,7 @@ public class BlackJack extends Match {
 			}
 			try {
 				//aqui se pasaria el toString del tapete a cada jugador
+				//Rellenas segun los jugadores las cartas
 				JSONMessage jsBoard=new BlackJackBoardMessage(this.toString());
 				for(int i=1; i<numeroJugadores;i++){
 				Notifier.get().post(this.players.get(i), jsBoard);
@@ -87,7 +89,8 @@ public class BlackJack extends Match {
 			}
 		} 
 		else {
-			JSONMessage jsm=new TresEnRayaWaitingMessage("Waiting for one more player");
+			JSONMessage jsm=new BJWaitingMessage("Waiting for one more player");
+			//JSONMessage jsm=new TresEnRayaWaitingMessage("Waiting for one more player");
 			try {
 				Notifier.get().post(this.players.get(0), jsm);
 			} catch (IOException e) {
@@ -134,7 +137,7 @@ public class BlackJack extends Match {
 		}
 			r+="#" + this.players.get(0).getEmail() + "#";
 			if (this.players.size()>=2) {
-				for(int k=0;k<players.size();k++){
+				for(int k=1;k<players.size();k++){
 					r+=this.players.get(k).getEmail() + "#";
 				}
 				r+=this.userWithTurn.getEmail();
