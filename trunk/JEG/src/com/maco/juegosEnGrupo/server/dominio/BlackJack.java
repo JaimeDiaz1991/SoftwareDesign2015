@@ -81,7 +81,8 @@ public class BlackJack extends Match {
 				//Rellenas segun los jugadores las cartas
 				rellenarTapete();
 				JSONMessage jsBoard=new BlackJackBoardMessage(this.toString());
-				for(int i=1; i<numeroJugadores;i++){
+				//CREO QUE PARA ACTUALIZAR EN LOS DOS HAY QUE TOCAR AQUÍ
+				for(int i=0; i<numeroJugadores;i++){
 				Notifier.get().post(this.players.get(i), jsBoard);
 				updateBoard(jsBoard);
 				}
@@ -247,6 +248,7 @@ public class BlackJack extends Match {
 
 		}
 		result=new BlackJackBoardMessage(this.toString());
+		//ACTUALIZA EN TODOS LOS TABLEROS?
 		Notifier.get().post(this.players, result);
 	}
 
