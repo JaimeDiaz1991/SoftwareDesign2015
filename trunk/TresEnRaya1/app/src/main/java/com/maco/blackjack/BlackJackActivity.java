@@ -62,6 +62,7 @@ public class BlackJackActivity extends ActionBarActivity {
             try {
                 if(contador == 0){
                     tag.put("planted",contador);
+                    //HE CAMBIADO LO DE PLANTED AL TEXTO EN VEZ DE A LAS TAG
                     btns[contador].setText("PLANTED");
                 }
                 else if(contador == 1) {
