@@ -51,7 +51,7 @@ public class BlackJack extends Match {
 		}
 		//CREAR TAPETE
 		tapetePuntuAcum = new int[5];
-		for (int i=0; i<tapeteCartas.size(); i++){
+		for (int i=0; i<5; i++){
 			tapeteCartas.put(i, new ArrayList<Carta>());
 			for (int j=0; j<2; j++){
 					tapeteCartas.get(i).add(new Carta());		
@@ -102,10 +102,14 @@ public class BlackJack extends Match {
 	}
 	
 	private void rellenarTapete() {
-		for(int i=0;i<tapeteCartas.size();i++){
-			tapeteCartas.get(i).add(elegirCartaAleatoria());
-			tapeteCartas.get(i).add(elegirCartaAleatoria());
+		for(int i=0;i<this.players.size();i++){
+			for (int j=0;j<tapeteCartas.get(i).size();j++){
+				if(tapeteCartas.get(i).get(j).getPalo()==null){
+						tapeteCartas.get(i).remove(j);
+						tapeteCartas.get(i).add(j, elegirCartaAleatoria());
+			}
 		}
+			}
 		
 	}
 
