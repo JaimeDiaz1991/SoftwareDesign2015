@@ -84,7 +84,7 @@ public class BlackJack extends Match {
 				//CREO QUE PARA ACTUALIZAR EN LOS DOS HAY QUE TOCAR AQUÍ
 				for(int i=0; i<numeroJugadores;i++){
 				Notifier.get().post(this.players.get(i), jsBoard);
-				updateBoard(jsBoard);
+				//updateBoard(jsBoard);
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -93,7 +93,6 @@ public class BlackJack extends Match {
 		} 
 		else {
 			JSONMessage jsm=new BJWaitingMessage("Waiting for one more player");
-			//JSONMessage jsm=new TresEnRayaWaitingMessage("Waiting for one more player");
 			try {
 				Notifier.get().post(this.players.get(0), jsm);
 			} catch (IOException e) {

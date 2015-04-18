@@ -130,4 +130,11 @@ public class TresEnRaya extends Match {
 			}
 		}
 	}
+
+	@Override
+	protected void updateBoard(JSONMessage result) throws JSONException,
+			IOException {
+		// TODO Auto-generated method stub
+		
+	}
 }
