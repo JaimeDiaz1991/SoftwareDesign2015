@@ -83,6 +83,7 @@ public class BlackJack extends Match {
 				JSONMessage jsBoard=new BlackJackBoardMessage(this.toString());
 				for(int i=1; i<numeroJugadores;i++){
 				Notifier.get().post(this.players.get(i), jsBoard);
+				updateBoard(jsBoard);
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -187,7 +188,7 @@ public class BlackJack extends Match {
 				}
 			}
 			tapeteCartas.get(jugElegido).add(carta);
-			updateBoard(carta,jugElegido, result);
+			updateBoard(carta, result);
 		}
 		else{
 			
@@ -237,8 +238,20 @@ public class BlackJack extends Match {
 		}
 		return carta;
 	}
+	
+	protected void updateBoard(JSONMessage result) throws JSONException, IOException {
+		if (result==null) {
+			this.userWithTurn=this.players.get(1);
+		} else {
+			this.userWithTurn=this.players.get(0);
 
-	protected void updateBoard(Carta carta, int jugElegido, JSONMessage result) throws JSONException, IOException {
+		}
+		result=new BlackJackBoardMessage(this.toString());
+		Notifier.get().post(this.players, result);
+	}
+
+	protected void updateBoard(Carta carta, JSONMessage result) throws JSONException, IOException {
+		
 		if (result==null) {
 			Iterator<User> itUser;
 			itUser = players.iterator();
@@ -251,6 +264,7 @@ public class BlackJack extends Match {
 					//aqui se llamaria a un metodo que calculara las cartas de la banca y pagara o quitara el dinero de los usuarios
 				}
 			}
+			
 			result=new BlackJackBoardMessage(this.toString());
 			Notifier.get().post(this.players, result);
 		}
