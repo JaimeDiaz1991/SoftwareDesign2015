@@ -47,7 +47,7 @@ public class JoinGame extends JSONAction {
 				e.printStackTrace();
 			}
 			jso=new OKMessage(jsa);
-		} //AQUI ES DONDE EL NUESTRO SE SALTA TODOS LOS PASOS, ÉCHALE UN OJO
+		} 
 		return jso.toJSONObject().toString();
 	}
 
