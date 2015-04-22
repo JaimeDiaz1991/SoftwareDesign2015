@@ -2,67 +2,39 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Jaime\Documents\proyecto_ds(13_04)\TresEnRaya1\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="C:\Users\Jaime\Documents\proyecto_ds(13_04)\TresEnRaya1\app\build\intermediates\pre-dexed\debug\classes-d39c5e0b7a5a54e9e9af5f63cbc6248cd6850e64.jar" />
-    </item>
-    <item
-        jar="C:\Users\Jaime\Documents\DECERO\TresEnRaya1\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="C:\Users\Jaime\Documents\DECERO\TresEnRaya1\app\build\intermediates\pre-dexed\debug\classes-83b0a4492f6e2344d42f27df5864194807c409c5.jar" />
-    </item>
-    <item
-        jar="C:\Users\Jaime\Documents\proyecto_ds(13_04)\TresEnRaya1\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.5.87\classes.jar"
+        jar="C:\Users\Isi\Desktop\TresEnRaya1\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.5.87\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="dd9247ea0fabe8ee479638c4b4a23e93752be256">
-        <dex dex="C:\Users\Jaime\Documents\proyecto_ds(13_04)\TresEnRaya1\app\build\intermediates\pre-dexed\debug\classes-cee0dc9d593ba5956fbb410d26068627ccd4ab1b.jar" />
+        <dex dex="C:\Users\Isi\Desktop\TresEnRaya1\app\build\intermediates\pre-dexed\debug\classes-47ae2d447059d1991cefab1a5501a84550c32a3e.jar" />
     </item>
     <item
-        jar="C:\Users\Jaime\Documents\DECERO\TresEnRaya1\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.5.87\classes.jar"
+        jar="C:\Users\Isi\Desktop\TresEnRaya1\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="dd9247ea0fabe8ee479638c4b4a23e93752be256">
-        <dex dex="C:\Users\Jaime\Documents\DECERO\TresEnRaya1\app\build\intermediates\pre-dexed\debug\classes-2ceb72e033b1f80ee2c55ca72a8c32d1edb9b927.jar" />
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="C:\Users\Isi\Desktop\TresEnRaya1\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-08e0b9295aa3dead865020eaf4ba0c7715792bdf.jar" />
     </item>
     <item
-        jar="C:\Users\Jaime\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jar="C:\Users\Isi\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="C:\Users\Jaime\Documents\DECERO\TresEnRaya1\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-78b7ad78673855ee2c0ecf6f0d31561cb869f484.jar" />
+        <dex dex="C:\Users\Isi\Desktop\TresEnRaya1\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-759bb6e873359ca4afafdbd85d73a73053bead09.jar" />
     </item>
     <item
-        jar="C:\Users\Jaime\Documents\DECERO\TresEnRaya1\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="C:\Users\Jaime\Documents\DECERO\TresEnRaya1\app\build\intermediates\pre-dexed\debug\classes-e375e572bba4196955a3eaa7da510645405b98bb.jar" />
-    </item>
-    <item
-        jar="C:\Users\Jaime\Documents\proyecto_ds(13_04)\TresEnRaya1\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="C:\Users\Jaime\Documents\proyecto_ds(13_04)\TresEnRaya1\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-924b9e7af1fb0a6a92e14e232af45f17108ff955.jar" />
-    </item>
-    <item
-        jar="C:\Users\Jaime\Documents\DECERO\TresEnRaya1\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="C:\Users\Jaime\Documents\DECERO\TresEnRaya1\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-3dc67071d879734bb7a47e957c58e1455ac9ea6f.jar" />
-    </item>
-    <item
-        jar="C:\Users\Jaime\Documents\proyecto_ds(13_04)\TresEnRaya1\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
+        jar="C:\Users\Isi\Desktop\TresEnRaya1\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="C:\Users\Jaime\Documents\proyecto_ds(13_04)\TresEnRaya1\app\build\intermediates\pre-dexed\debug\classes-4a5c62ebc19a482ea573e32b070fcd0138aa09a7.jar" />
+        <dex dex="C:\Users\Isi\Desktop\TresEnRaya1\app\build\intermediates\pre-dexed\debug\classes-c10363e6e7b28a205844248eda41e8074b2c42d6.jar" />
+    </item>
+    <item
+        jar="C:\Users\Isi\Desktop\TresEnRaya1\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="C:\Users\Isi\Desktop\TresEnRaya1\app\build\intermediates\pre-dexed\debug\classes-b9ffc6556c970783206aa54a361678676ada1f21.jar" />
     </item>
 
 </items>
