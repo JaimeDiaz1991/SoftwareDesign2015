@@ -82,10 +82,7 @@ public class BlackJack extends Match {
 				rellenarTapete();
 				JSONMessage jsBoard=new BlackJackBoardMessage(this.toString());
 				//CREO QUE PARA ACTUALIZAR EN LOS DOS HAY QUE TOCAR AQUÍ
-				for(int i=0; i<numeroJugadores;i++){
-				Notifier.get().post(this.players.get(i), jsBoard);
-				//updateBoard(jsBoard);
-				}
+				Notifier.get().post(this.players, jsBoard);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
