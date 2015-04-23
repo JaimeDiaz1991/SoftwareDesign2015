@@ -137,4 +137,10 @@ public class TresEnRaya extends Match {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	protected void postBet(User user, JSONObject jsoBet) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
 }
