@@ -1688,8 +1688,10 @@ containing a value of this type.
         public static final int ic_plusone_small_off_client=0x7f02004f;
         public static final int ic_plusone_standard_off_client=0x7f020050;
         public static final int ic_plusone_tall_off_client=0x7f020051;
-        public static final int powered_by_google_dark=0x7f020052;
-        public static final int powered_by_google_light=0x7f020053;
+        public static final int picture1=0x7f020052;
+        public static final int picture2=0x7f020053;
+        public static final int powered_by_google_dark=0x7f020054;
+        public static final int powered_by_google_light=0x7f020055;
     }
     public static final class id {
         public static final int LinearLayout1=0x7f09005e;
@@ -1716,7 +1718,7 @@ containing a value of this type.
         public static final int always=0x7f09001b;
         public static final int beginning=0x7f090013;
         public static final int book_now=0x7f09002b;
-        public static final int button0=0x7f09005b;
+        public static final int button0=0x7f090059;
         public static final int button1=0x7f09005c;
         public static final int button2=0x7f09005d;
         public static final int button3=0x7f090060;
@@ -1796,15 +1798,15 @@ containing a value of this type.
         public static final int terrain=0x7f09001a;
         public static final int textView3=0x7f09006b;
         public static final int textViewBJPlayer=0x7f090054;
-        public static final int textViewCartas0=0x7f090056;
-        public static final int textViewCartas1=0x7f090057;
+        public static final int textViewCartas0=0x7f090057;
+        public static final int textViewCartas1=0x7f090055;
         public static final int textViewCartas2=0x7f090058;
-        public static final int textViewCartas3=0x7f090059;
-        public static final int textViewCartas4=0x7f09005a;
+        public static final int textViewCartas3=0x7f09005a;
+        public static final int textViewCartas4=0x7f09005b;
         public static final int textViewErrorMsg=0x7f090072;
         public static final int textViewGameName=0x7f09006f;
         public static final int textViewMessage=0x7f090066;
-        public static final int textViewMessageBJ=0x7f090055;
+        public static final int textViewMessageBJ=0x7f090056;
         public static final int textViewOpponent=0x7f090067;
         public static final int textViewPlayersWaiting=0x7f090078;
         public static final int textViewPwd1=0x7f090069;
