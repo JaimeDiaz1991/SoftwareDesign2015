@@ -62,8 +62,8 @@ public class BlackJackActivity extends ActionBarActivity {
             try {
                 if(contador == 0){
                     tag.put("planted",contador);
-                    //H
                     btns[contador].setText("PLANTED");
+
                 }
                 else if(contador == 1) {
                     tag.put("requestCard", contador);

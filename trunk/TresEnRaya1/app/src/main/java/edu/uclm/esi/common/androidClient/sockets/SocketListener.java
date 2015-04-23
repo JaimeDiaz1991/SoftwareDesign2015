@@ -131,7 +131,7 @@ public class SocketListener extends Thread {
             return;
         }
 
-        if (jsm.getType().equals(BJWaitingMessage.class.getSimpleName())) {
+        if (jsm.getType().equals(BlackJackBoardMessage.class.getSimpleName())) {
             final BlackJackBoardMessage board = (BlackJackBoardMessage) jsm;
             final BlackJackActivity activity = (BlackJackActivity) Store.get().getCurrentContext();
             activity.runOnUiThread(new Runnable() {

@@ -5,7 +5,6 @@ import org.json.JSONObject;
 
 import com.maco.blackjack.jsonMessagesBlackJack.BJWaitingMessage;
 import com.maco.blackjack.jsonMessagesBlackJack.BlackJackBoardMessage;
-import com.maco.blackjack.jsonMessagesBlackJack.BlackJackMatchReadyMessage;
 import com.maco.tresenraya.jsonMessages.GameListMessage;
 import com.maco.tresenraya.jsonMessages.TresEnRayaBoardMessage;
 import com.maco.tresenraya.jsonMessages.TresEnRayaWaitingMessage;
@@ -34,8 +33,6 @@ public class JSONMessagesBuilder {
             return new BlackJackBoardMessage(jso);
         if (jso.get("type").equals(BJWaitingMessage.class.getSimpleName()))
             return new BJWaitingMessage(jso.getString("text"));
-        if (jso.get("type").equals(BlackJackMatchReadyMessage.class.getSimpleName()))
-            return new BlackJackMatchReadyMessage(jso.getString("text"));
 		return null;
 	}
 }
