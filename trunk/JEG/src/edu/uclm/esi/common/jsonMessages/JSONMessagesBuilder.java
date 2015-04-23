@@ -31,9 +31,9 @@ public class JSONMessagesBuilder {
 			return new TresEnRayaWaitingMessage(jso.getString("text"));
 		//Nuevo
 		if (jso.get("type").equals(BlackJackBoardMessage.class.getSimpleName()))
-			return new TresEnRayaBoardMessage(jso);
+			return new BlackJackBoardMessage(jso);
 		if (jso.get("type").equals(BJWaitingMessage.class.getSimpleName()))
-			return new TresEnRayaWaitingMessage(jso.getString("text"));
+			return new BJWaitingMessage(jso.getString("text"));
 		return null;
 	}
 }

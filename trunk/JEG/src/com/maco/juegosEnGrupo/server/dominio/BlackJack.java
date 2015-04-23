@@ -41,6 +41,8 @@ public class BlackJack extends Match {
 	private Hashtable <Integer,ArrayList<Carta>> tapeteCartas= new Hashtable<Integer,ArrayList<Carta>>();
 	private int [] tapetePuntuAcum;
 	private int numeroJugadores;
+	private int apuestas =1;
+	private int ronda=1;
 	
 	public BlackJack(Game game) {
 		super(game);
@@ -63,33 +65,17 @@ public class BlackJack extends Match {
 	protected void postAddUser(User user) {
 		
 		if (this.players.size()==2) {
-			System.out.println(players.size());
-			JSONMessage jsTurn=new BJWaitingMessage("Match ready. You have the turn.");
-			JSONMessage jsNoTurn=new BJWaitingMessage("Match ready. Wait for the opponent to move.");
-			int numeroJugadores=players.size();
-			this.userWithTurn=this.players.get(0);
-			try{
-				Notifier.get().post(this.players.get(0), jsTurn);
-				for(int i=1; i<numeroJugadores;i++){
-					Notifier.get().post(this.players.get(i), jsNoTurn);
-				}
-			}catch(Exception e){
-				e.printStackTrace();
-			}
+			JSONMessage jsm=new BJWaitingMessage("Waiting for bet");
 			try {
-				//aqui se pasaria el toString del tapete a cada jugador
-				//Rellenas segun los jugadores las cartas
-				rellenarTapete();
-				JSONMessage jsBoard=new BlackJackBoardMessage(this.toString());
-				//CREO QUE PARA ACTUALIZAR EN LOS DOS HAY QUE TOCAR AQUÍ
-				Notifier.get().post(this.players, jsBoard);
-			} catch (Exception e) {
+				Notifier.get().post(this.players.get(0), jsm);
+				Notifier.get().post(this.players.get(1), jsm);
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} 
 		else {
-			JSONMessage jsm=new BJWaitingMessage("Waiting for one more player");
+			JSONMessage jsm=new BJWaitingMessage("Waiting for more player");
 			try {
 				Notifier.get().post(this.players.get(0), jsm);
 			} catch (IOException e) {
@@ -100,7 +86,7 @@ public class BlackJack extends Match {
 	}
 	
 	private void rellenarTapete() {
-		for(int i=0;i<this.players.size();i++){
+		for(int i=0;i<this.players.size()+1;i++){
 			for (int j=0;j<tapeteCartas.get(i).size();j++){
 				if(tapeteCartas.get(i).get(j).getPalo()==null){
 						tapeteCartas.get(i).remove(j);
@@ -280,8 +266,64 @@ public class BlackJack extends Match {
 		
 	}
 
-
-
+	protected void postBet(User user, JSONObject jsoBet){
+		if(apuestas == 2){
+			try {
+				for (int i = 0; i < players.size(); i++) {
+					if (players.get(i).equals(user)) {
+						players.get(i).setApuestas(ronda, jsoBet.getInt("bet"));
+					}
+				}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			JSONMessage jsTurn=new BJWaitingMessage("Match ready. You have the turn.");
+			JSONMessage jsNoTurn=new BJWaitingMessage("Match ready. Wait for the opponent to move.");
+			int numeroJugadores=players.size();
+			this.userWithTurn=this.players.get(0);
+			try{
+				Notifier.get().post(this.players.get(0), jsTurn);
+				for(int i=1; i<numeroJugadores;i++){
+					Notifier.get().post(this.players.get(i), jsNoTurn);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			try {
+				//aqui se pasaria el toString del tapete a cada jugador
+				//Rellenas segun los jugadores las cartas
+				rellenarTapete();
+				JSONMessage jsBoard=new BlackJackBoardMessage(this.toString());
+				//CREO QUE PARA ACTUALIZAR EN LOS DOS HAY QUE TOCAR AQUÍ
+				Notifier.get().post(this.players, jsBoard);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else{
+			apuestas++;
+			try {
+				for (int i = 0; i < players.size(); i++) {
+					if (players.get(i).equals(user)) {
+						players.get(i).setApuestas(ronda, jsoBet.getInt("bet"));
+					}
+				}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			JSONMessage jsm=new BJWaitingMessage("Waiting for bet of other players");
+			try {
+				Notifier.get().post(this.players.get(0), jsm);
+				Notifier.get().post(this.players.get(1), jsm);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 
 }
 
