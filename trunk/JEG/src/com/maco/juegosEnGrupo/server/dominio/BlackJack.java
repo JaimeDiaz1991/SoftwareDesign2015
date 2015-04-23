@@ -46,12 +46,11 @@ public class BlackJack extends Match {
 	
 	public BlackJack(Game game) {
 		super(game);
-		//creamos las barajas que tengamos elegidas en numeroBarajas
 		
 		for (int i=0; i<numeroBarajas; i++){
 			barajas.add(new Baraja());
 		}
-		//CREAR TAPETE
+		
 		tapetePuntuAcum = new int[5];
 		for (int i=0; i<5; i++){
 			tapeteCartas.put(i, new ArrayList<Carta>());
@@ -65,12 +64,15 @@ public class BlackJack extends Match {
 	protected void postAddUser(User user) {
 		
 		if (this.players.size()==2) {
-			this.userWithTurn=this.players.get(0);
-			JSONMessage jsm=new BJWaitingMessage("Waiting for bet");
 			try {
+				this.userWithTurn=this.players.get(0);
+				JSONMessage jsBoard=new BlackJackBoardMessage(this.toString());
+				JSONMessage jsm=new BJWaitingMessage("Waiting for bet");
 				Notifier.get().post(this.players.get(0), jsm);
 				Notifier.get().post(this.players.get(1), jsm);
-			} catch (IOException e) {
+				Notifier.get().post(this.players.get(0), jsBoard);
+				Notifier.get().post(this.players.get(1), jsBoard);
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -138,7 +140,6 @@ public class BlackJack extends Match {
 				for(int k=1;k<players.size();k++){
 					r+=this.players.get(k).getEmail() + "#";
 				}
-				r+="banca@isicansino.com" + "#";
 				r+=this.userWithTurn.getEmail();
 			}
 			return r;
@@ -283,7 +284,6 @@ public class BlackJack extends Match {
 			JSONMessage jsTurn=new BJWaitingMessage("Match ready. You have the turn.");
 			JSONMessage jsNoTurn=new BJWaitingMessage("Match ready. Wait for the opponent to move.");
 			int numeroJugadores=players.size();
-			
 			try{
 				Notifier.get().post(this.players.get(0), jsTurn);
 				for(int i=1; i<numeroJugadores;i++){
@@ -319,7 +319,6 @@ public class BlackJack extends Match {
 			JSONMessage jsm=new BJWaitingMessage("Waiting for bet of other players");
 			try {
 				Notifier.get().post(this.players.get(0), jsm);
-				Notifier.get().post(this.players.get(1), jsm);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -328,5 +327,3 @@ public class BlackJack extends Match {
 	}
 
 }
-
-
