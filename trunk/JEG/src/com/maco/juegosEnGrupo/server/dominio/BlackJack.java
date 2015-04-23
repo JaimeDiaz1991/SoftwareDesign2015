@@ -65,6 +65,7 @@ public class BlackJack extends Match {
 	protected void postAddUser(User user) {
 		
 		if (this.players.size()==2) {
+			this.userWithTurn=this.players.get(0);
 			JSONMessage jsm=new BJWaitingMessage("Waiting for bet");
 			try {
 				Notifier.get().post(this.players.get(0), jsm);
@@ -86,7 +87,7 @@ public class BlackJack extends Match {
 	}
 	
 	private void rellenarTapete() {
-		for(int i=0;i<this.players.size()+1;i++){
+		for(int i=0;i<this.players.size();i++){
 			for (int j=0;j<tapeteCartas.get(i).size();j++){
 				if(tapeteCartas.get(i).get(j).getPalo()==null){
 						tapeteCartas.get(i).remove(j);
@@ -137,6 +138,7 @@ public class BlackJack extends Match {
 				for(int k=1;k<players.size();k++){
 					r+=this.players.get(k).getEmail() + "#";
 				}
+				r+="banca@isicansino.com" + "#";
 				r+=this.userWithTurn.getEmail();
 			}
 			return r;
@@ -281,7 +283,7 @@ public class BlackJack extends Match {
 			JSONMessage jsTurn=new BJWaitingMessage("Match ready. You have the turn.");
 			JSONMessage jsNoTurn=new BJWaitingMessage("Match ready. Wait for the opponent to move.");
 			int numeroJugadores=players.size();
-			this.userWithTurn=this.players.get(0);
+			
 			try{
 				Notifier.get().post(this.players.get(0), jsTurn);
 				for(int i=1; i<numeroJugadores;i++){
