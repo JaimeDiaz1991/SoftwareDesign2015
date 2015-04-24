@@ -42,7 +42,7 @@ public class Planted extends JSONAction {
 	@Override
 	public void setCommand(String cmd) {
 		try {
-			this.jsoBet = new JSONObject(cmd);
+			this.jsoPld = new JSONObject(cmd);
 		} catch (JSONException e) {
 			this.exception=e;
 		}
