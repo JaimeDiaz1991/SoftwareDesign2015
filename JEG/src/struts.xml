@@ -71,6 +71,15 @@
 			<result name="success" type="json"/>
 			<result name="error" type="json"/>
 		</action>
+				<action name="RequestCard" class="com.maco.juegosEnGrupo.server.actions.RequestCard">
+			<result name="success" type="json"/>
+			<result name="error" type="json"/>
+		</action>
+				</action>
+				<action name="Planted" class="com.maco.juegosEnGrupo.server.actions.Planted">
+			<result name="success" type="json"/>
+			<result name="error" type="json"/>
+		</action>
 	</package>
 </struts>
 
