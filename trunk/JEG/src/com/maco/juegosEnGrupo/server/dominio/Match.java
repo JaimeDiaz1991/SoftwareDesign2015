@@ -61,11 +61,23 @@ public abstract class Match {
 			throw new Exception("It's not your turn");
 		postBet(user, jsoBet);
 	}
+	public void requestCard(User user, JSONObject jsoRec) throws Exception {
+		if (!isTheTurnOf(user))
+			throw new Exception("It's not your turn");
+		postBet(user, jsoRec);
+	}
+	public void planted(User user, JSONObject jsoPld) throws Exception {
+		if (!isTheTurnOf(user))
+			throw new Exception("It's not your turn");
+		postBet(user, jsoPld);
+	}
 
 	protected abstract boolean isTheTurnOf(User user);
 	protected abstract void postMove(User user, JSONObject jsoMovement) throws Exception;
 	protected abstract void postBet(User user, JSONObject jsoBet) throws Exception;
 	protected abstract void updateBoard(int row, int col, JSONMessage result) throws JSONException, IOException;
 	protected abstract void updateBoard(JSONMessage result) throws JSONException, IOException;
+	protected abstract void postRequestCard(User user, JSONObject jsoRec) throws Exception;
+	protected abstract void postPlanted(User user, JSONObject jsoRec) throws Exception;
 }
 

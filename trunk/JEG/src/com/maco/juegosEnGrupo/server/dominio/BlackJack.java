@@ -23,6 +23,8 @@ import com.maco.juegosEnGrupo.server.dominio.Carta;
 
 
 
+
+
 import edu.uclm.esi.common.jsonMessages.ErrorMessage;
 import edu.uclm.esi.common.jsonMessages.JSONMessage;
 import edu.uclm.esi.common.server.domain.User;
@@ -151,8 +153,8 @@ public class BlackJack extends Match {
 		return this.userWithTurn.equals(user);
 	}
 
-	private void requestCard(User user, JSONObject jsoMovement) throws Exception {
-		if (!jsoMovement.get("type").equals(BlackJackRequestCard.class.getSimpleName())) {
+	protected void postRequestCard(User user, JSONObject jsoRequestCard) throws Exception {
+		if (!jsoRequestCard.get("type").equals(BlackJackRequestCard.class.getSimpleName())) {
 			throw new Exception("Can't request more cards");
 		}
 		JSONMessage result=null;
@@ -174,10 +176,9 @@ public class BlackJack extends Match {
 				}
 			}
 			tapeteCartas.get(jugElegido).add(carta);
-			updateBoard(carta, result);
+			updateBoard(result);
 		}
 		else{
-			
 			result = new BlackJackRequestCard("You got more than 21");
 			Notifier.get().post(userWithTurn, result);
 		}
@@ -225,7 +226,7 @@ public class BlackJack extends Match {
 		return carta;
 	}
 	
-	protected void updateBoard(JSONMessage result) throws JSONException, IOException {
+	/*protected void updateBoard(JSONMessage result) throws JSONException, IOException {
 		if (result==null) {
 			this.userWithTurn=this.players.get(1);
 		} else {
@@ -235,10 +236,9 @@ public class BlackJack extends Match {
 		result=new BlackJackBoardMessage(this.toString());
 		//ACTUALIZA EN TODOS LOS TABLEROS?
 		Notifier.get().post(this.players, result);
-	}
+	}*/
 
-	protected void updateBoard(Carta carta, JSONMessage result) throws JSONException, IOException {
-		
+	protected void updateBoard(JSONMessage result) throws JSONException, IOException {
 		if (result==null) {
 			Iterator<User> itUser;
 			itUser = players.iterator();
@@ -251,11 +251,9 @@ public class BlackJack extends Match {
 					//aqui se llamaria a un metodo que calculara las cartas de la banca y pagara o quitara el dinero de los usuarios
 				}
 			}
-			
 			result=new BlackJackBoardMessage(this.toString());
 			Notifier.get().post(this.players, result);
 		}
-
 	}
 
 	@Override
@@ -289,18 +287,10 @@ public class BlackJack extends Match {
 				for(int i=1; i<numeroJugadores;i++){
 					Notifier.get().post(this.players.get(i), jsNoTurn);
 				}
-			}catch(Exception e){
-				e.printStackTrace();
-			}
-			try {
-				//aqui se pasaria el toString del tapete a cada jugador
-				//Rellenas segun los jugadores las cartas
 				rellenarTapete();
 				JSONMessage jsBoard=new BlackJackBoardMessage(this.toString());
-				//CREO QUE PARA ACTUALIZAR EN LOS DOS HAY QUE TOCAR AQUÍ
 				Notifier.get().post(this.players, jsBoard);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -312,18 +302,20 @@ public class BlackJack extends Match {
 						players.get(i).setApuestas(ronda, jsoBet.getInt("bet"));
 					}
 				}
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			JSONMessage jsm=new BJWaitingMessage("Waiting for bet of other players");
-			try {
+				JSONMessage result = null;
+				updateBoard(result);
+				JSONMessage jsm=new BJWaitingMessage("Waiting for bet of other players");	
 				Notifier.get().post(this.players.get(0), jsm);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	protected void postPlanted(User user, JSONObject jsoRec) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

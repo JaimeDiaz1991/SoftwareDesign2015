@@ -42,7 +42,7 @@ public class RequestCard extends JSONAction {
 	@Override
 	public void setCommand(String cmd) {
 		try {
-			this.jsoBet = new JSONObject(cmd);
+			this.jsoRec = new JSONObject(cmd);
 		} catch (JSONException e) {
 			this.exception=e;
 		}

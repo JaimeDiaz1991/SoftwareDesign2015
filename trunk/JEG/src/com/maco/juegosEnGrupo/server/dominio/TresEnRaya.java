@@ -143,4 +143,17 @@ public class TresEnRaya extends Match {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	protected void postRequestCard(User user, JSONObject jsoRec)
+			throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void postPlanted(User user, JSONObject jsoRec) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
 }
