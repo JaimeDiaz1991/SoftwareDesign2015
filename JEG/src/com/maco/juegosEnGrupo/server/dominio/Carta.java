@@ -18,7 +18,16 @@ public class Carta {
 	}
 	@Override
 	public String toString() {
-		return palo + "," + numero;
+		if(this.numero==1)
+			return "AS "+ palo;
+		else if(this.numero==11)
+			return "J "+ palo;
+		else if(this.numero==12)
+			return "Q "+ palo;
+		else if(this.numero==13)
+			return "K "+ palo;
+		else
+		return numero + " " + palo;
 	}
 	public Carta(){
 		
