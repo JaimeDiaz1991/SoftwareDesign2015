@@ -120,21 +120,21 @@ public class BlackJack extends Match {
 	public String toString() {
 		String r="";
 		int acumu=0;
+		int acumu2=0;
 		for(int i=0;i<this.tapeteCartas.size();i++){
+			acumu=0;
+			acumu=0;
 			for(int j=0; j<this.tapeteCartas.get(i).size();j++){
-				if(this.tapeteCartas.get(i).size()==2)	
 					r+=this.tapeteCartas.get(i).get(j).toString();
-				else{
-					//r+=this.tapeteCartas.get(i).get(0).toString();
-					if(j<this.tapeteCartas.get(i).size()-1)
-						acumu=acumu+this.tapeteCartas.get(i).get(j).getNumero();
-				
-					r+=Integer.toString(acumu);
-					r+=this.tapeteCartas.get(i).get(this.tapeteCartas.get(i).size()-1).toString();
-				}
-				r+="_";
+					acumu=acumu+this.tapeteCartas.get(i).get(j).getNumero();
+					if(this.tapeteCartas.get(i).get(j).getNumero()==1)
+							acumu2=acumu+acumu2+11;
+					if(j < this.tapeteCartas.get(i).size()-1)
+					r+="_";
 			}
-			
+			r+="!"+Integer.toString(acumu);
+			if(acumu2!=0)
+				r+="/"+acumu2;			
 			r+="-";
 		}
 			r+="#" + this.players.get(0).getEmail() + "#";
