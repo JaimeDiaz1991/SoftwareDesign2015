@@ -248,7 +248,7 @@ public class BlackJack extends Match {
 				if(u == userWithTurn && itUser.hasNext()){
 					userWithTurn = itUser.next();
 				}else{
-					//aqui se llamaria a un metodo que calculara las cartas de la banca y pagara o quitara el dinero de los usuarios
+					turnoBanca();
 				}
 			}
 			result=new BlackJackBoardMessage(this.toString());
@@ -314,7 +314,15 @@ public class BlackJack extends Match {
 
 	@Override
 	protected void postPlanted(User user, JSONObject jsoRec) throws Exception {
-		// TODO Auto-generated method stub
+		if(jsoRec!=null){
+			JSONMessage result = null;
+			updateBoard(result);
+		}
+		
+		
+	}
+	
+	private void turnoBanca(){
 		
 	}
 
