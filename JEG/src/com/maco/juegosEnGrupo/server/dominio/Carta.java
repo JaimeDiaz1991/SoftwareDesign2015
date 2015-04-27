@@ -62,6 +62,5 @@ public class Carta {
 	public void setFigura(boolean figura) {
 		this.figura = figura;
 	}
-	
 }
 
