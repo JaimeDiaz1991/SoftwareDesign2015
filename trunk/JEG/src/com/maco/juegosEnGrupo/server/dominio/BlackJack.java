@@ -99,6 +99,12 @@ public class BlackJack extends Match {
 			}
 		}
 			}
+		//Rellenar banca
+			if(tapeteCartas.get(4).get(0).getPalo()==null){
+				tapeteCartas.get(4).remove(0);
+				tapeteCartas.get(4).add(0, elegirCartaAleatoria());
+		}
+			
 		
 	}
 
@@ -138,7 +144,7 @@ public class BlackJack extends Match {
 			}
 			r+="!"+Integer.toString(acumu);
 			if(acumu2!=0)
-				r+="/"+acumu2;			
+				r+="/"+acumu2;
 			r+="-";
 		}
 			r+="#" + this.players.get(0).getEmail() + "#";
