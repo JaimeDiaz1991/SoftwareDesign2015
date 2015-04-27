@@ -126,7 +126,11 @@ public class BlackJack extends Match {
 			acumu=0;
 			for(int j=0; j<this.tapeteCartas.get(i).size();j++){
 					r+=this.tapeteCartas.get(i).get(j).toString();
+					if(this.tapeteCartas.get(i).get(j).isFigura())
+						acumu=acumu+10;
+					else{
 					acumu=acumu+this.tapeteCartas.get(i).get(j).getNumero();
+					}
 					if(this.tapeteCartas.get(i).get(j).getNumero()==1)
 							acumu2=acumu+acumu2+11;
 					if(j < this.tapeteCartas.get(i).size()-1)

@@ -56,5 +56,12 @@ public class Carta {
 	public void setestaEnBaraja(boolean estaEnBaraja) {
 		this.estaEnBaraja = estaEnBaraja;
 	}
+	public boolean isFigura() {
+		return figura;
+	}
+	public void setFigura(boolean figura) {
+		this.figura = figura;
+	}
+	
 }
 
