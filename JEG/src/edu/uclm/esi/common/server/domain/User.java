@@ -20,7 +20,7 @@ public class User {
 	private String ip;
 	private String userType;
 	private double dinero;
-	private LinkedList<Integer> apuestas;
+	private LinkedList<Integer> apuestas= new LinkedList<Integer>();
 	//private IClienteRMI clienteRMI;
 
 	public User() {
@@ -99,7 +99,7 @@ public class User {
 	}
 
 	public void setApuestas(int i, int apuesta) {
-		this.apuestas.set(i, apuesta);
+		this.apuestas.add(apuesta);
 	}
 
 
