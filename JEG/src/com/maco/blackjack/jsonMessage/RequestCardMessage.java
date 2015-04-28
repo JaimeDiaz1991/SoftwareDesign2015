@@ -3,18 +3,18 @@ package com.maco.blackjack.jsonMessage;
 import edu.uclm.esi.common.jsonMessages.JSONMessage;
 import edu.uclm.esi.common.jsonMessages.JSONable;
 
-public class BlackJackRequestCard extends JSONMessage{
+public class RequestCardMessage extends JSONMessage{
 	@JSONable
-	private String test;
+	private String text;
 	
-	public BlackJackRequestCard(String test) {
+	public RequestCardMessage(String text) {
 		super(false);
-		this.test = test;
+		this.text = text;
 		
 	}
 	
-	public String getTest() {
-		return test;
+	public String getText() {
+		return text;
 	}
 
 }
