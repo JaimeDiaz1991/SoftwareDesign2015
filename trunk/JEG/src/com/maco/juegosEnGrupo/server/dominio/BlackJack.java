@@ -138,7 +138,7 @@ public class BlackJack extends Match {
 					acumu=acumu+this.tapeteCartas.get(i).get(j).getNumero();
 					}
 					if(this.tapeteCartas.get(i).get(j).getNumero()==1)
-							acumu2=acumu+acumu2+11;
+							acumu2=acumu+acumu2+10;
 					if(j < this.tapeteCartas.get(i).size()-1)
 					r+="_";
 			}
@@ -168,29 +168,20 @@ public class BlackJack extends Match {
 			throw new Exception("Can't request more cards");
 		}
 		JSONMessage result=null;
-		boolean finish=true;
-		Iterator<User> jugadores;
-		String cadena;
-		jugadores = players.iterator();
-		User u = null;
-		int jugElegido = -1;
+		JSONMessage result2=null;
+
 		
 		if(calcularSumaCartas(players, tapeteCartas)<=21){
 			Carta carta = elegirCartaAleatoria();
-			while (jugadores.hasNext()) {
-				u = jugadores.next();
-				if (u == userWithTurn) {
-					break;
-				} else {
-					jugElegido++;
-				}
-			}
-			tapeteCartas.get(jugElegido).add(carta);
+			tapeteCartas.get(userWithTurn).add(carta);
+			result = new BlackJackRequestCard(carta.toString());
+			Notifier.get().post(userWithTurn, result);
 			updateBoard(result);
 		}
 		else{
 			result = new BlackJackRequestCard("You got more than 21");
 			Notifier.get().post(userWithTurn, result);
+			updateBoard(result2);
 		}
 	}
 
@@ -264,6 +255,10 @@ public class BlackJack extends Match {
 			result=new BlackJackBoardMessage(this.toString());
 			Notifier.get().post(this.players, result);
 		}
+		else{
+			result=new BlackJackBoardMessage(this.toString());
+			Notifier.get().post(this.players, result);
+		}
 	}
 
 	@Override
@@ -333,6 +328,8 @@ public class BlackJack extends Match {
 	}
 	
 	private void turnoBanca(){
+		System.out.print("TURNO DE LA BANCA");
+		
 		
 	}
 

@@ -64,7 +64,7 @@ public abstract class Match {
 	public void requestCard(User user, JSONObject jsoRec) throws Exception {
 		if (!isTheTurnOf(user))
 			throw new Exception("It's not your turn");
-		postBet(user, jsoRec);
+		postRequestCard(user, jsoRec);
 	}
 	public void planted(User user, JSONObject jsoPld) throws Exception {
 		if (!isTheTurnOf(user))
