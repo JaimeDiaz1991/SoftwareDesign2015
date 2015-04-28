@@ -171,15 +171,16 @@ public class BlackJack extends Match {
 		JSONMessage result2=null;
 
 		
+		Carta carta = elegirCartaAleatoria();
+		tapeteCartas.get(userWithTurn).add(carta);
+		
 		if(calcularSumaCartas(players, tapeteCartas)<=21){
-			Carta carta = elegirCartaAleatoria();
-			tapeteCartas.get(userWithTurn).add(carta);
-			result = new BlackJackRequestCard(carta.toString());
+			result2 = new BlackJackRequestCard("NUEVA CARTA: "+ carta.toString());
 			Notifier.get().post(userWithTurn, result);
 			updateBoard(result);
 		}
 		else{
-			result = new BlackJackRequestCard("You got more than 21");
+			result2 = new BlackJackRequestCard("NUEVA CARTA: "+ carta.toString()+" Te has pasado pollo");
 			Notifier.get().post(userWithTurn, result);
 			updateBoard(result2);
 		}
@@ -293,8 +294,10 @@ public class BlackJack extends Match {
 					Notifier.get().post(this.players.get(i), jsNoTurn);
 				}
 				rellenarTapete();
+				userWithTurn=players.get(0);
 				JSONMessage jsBoard=new BlackJackBoardMessage(this.toString());
 				Notifier.get().post(this.players, jsBoard);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
