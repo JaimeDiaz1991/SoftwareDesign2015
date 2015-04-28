@@ -69,7 +69,7 @@ public abstract class Match {
 	public void planted(User user, JSONObject jsoPld) throws Exception {
 		if (!isTheTurnOf(user))
 			throw new Exception("It's not your turn");
-		postBet(user, jsoPld);
+		postPlanted(user, jsoPld);
 	}
 
 	protected abstract boolean isTheTurnOf(User user);
