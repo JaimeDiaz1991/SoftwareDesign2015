@@ -171,9 +171,7 @@ public class BlackJack extends Match {
 		JSONMessage result2=null;
 
 		
-		Carta carta = elegirCartaAleatoria();
-		System.out.println("HOLA "+this.userWithTurn.getId());
-		
+		Carta carta = elegirCartaAleatoria();		
 		Iterator<User> jugadores = this.players.iterator();
 		int contador=0;
 		User u;
@@ -185,6 +183,7 @@ public class BlackJack extends Match {
 				contador++;
 			}
 		}
+		System.out.println("HOLA "+contador);
 		tapeteCartas.get(contador).add(carta);
 		
 		if(calcularSumaCartas(players, tapeteCartas)<=21){
