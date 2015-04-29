@@ -173,7 +173,19 @@ public class BlackJack extends Match {
 		
 		Carta carta = elegirCartaAleatoria();
 		System.out.println("HOLA "+this.userWithTurn.getId());
-		tapeteCartas.get(userWithTurn.getId()).add(carta);
+		
+		Iterator<User> jugadores = this.players.iterator();
+		int contador=0;
+		User u;
+		while (jugadores.hasNext()) {
+			u = jugadores.next();
+			if (u == this.userWithTurn) {
+				break;
+			} else {
+				contador++;
+			}
+		}
+		tapeteCartas.get(contador).add(carta);
 		
 		if(calcularSumaCartas(players, tapeteCartas)<=21){
 			result2 = new RequestCardMessage("NUEVA CARTA: "+ carta.toString());
