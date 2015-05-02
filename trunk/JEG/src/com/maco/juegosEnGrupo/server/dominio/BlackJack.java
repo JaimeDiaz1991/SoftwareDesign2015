@@ -16,8 +16,10 @@ import org.json.JSONObject;
 
 import com.maco.blackjack.jsonMessage.BJWaitingMessage;
 import com.maco.blackjack.jsonMessage.BlackJackBoardMessage;
+import com.maco.blackjack.jsonMessage.BlackJackNewRound;
 import com.maco.blackjack.jsonMessage.RequestCardMessage;
 import com.maco.juegosEnGrupo.server.dominio.Carta;
+
 
 
 
@@ -183,10 +185,9 @@ public class BlackJack extends Match {
 				contador++;
 			}
 		}
-		System.out.println("HOLA "+contador);
 		tapeteCartas.get(contador).add(carta);
 		
-		if(calcularSumaCartas(players, tapeteCartas)<=21){
+		if(calcularSumaCartas(contador)<=21){
 			result2 = new RequestCardMessage("NUEVA CARTA: "+ carta.toString());
 			Notifier.get().post(userWithTurn, result2);
 			updateBoard(result2);
@@ -198,28 +199,22 @@ public class BlackJack extends Match {
 		}
 	}
 
-	private int calcularSumaCartas(Vector<User> players,
-			Hashtable<Integer, ArrayList<Carta>> tapeteCartas2) {
-		Iterator<User> jugadores = this.players.iterator();
-		Iterator<Carta> itCartas;
-		int suma = 0;
-		User u = null;
-		int jugElegido=-1;
-		int contador=0;
-		while (jugadores.hasNext()) {
-			u = jugadores.next();
-			if (u == this.userWithTurn) {
-				jugElegido=contador;
-				break;
-			} else {
-				jugElegido++;
-			}
-			contador++;
-		}
-		itCartas = tapeteCartas.get(contador).iterator();
+	private int calcularSumaCartas(int contador) {
+		Iterator<Carta> itCartas=tapeteCartas.get(contador).iterator();
+		int suma=0, suma2=0;
+		Carta card;
 		while(itCartas.hasNext()){
-			suma += itCartas.next().getNumero();
-			//CAMBIAR
+			card=itCartas.next();
+			if(card.getNumero()==1){
+				suma+=1;
+				suma2+=11;
+			}else if(card.isFigura()){
+				suma+=10;
+				suma2+=10;
+			}else{
+				suma+=card.getNumero();
+				suma2+=card.getNumero();
+			}
 		}
 		return suma;
 	}
@@ -243,18 +238,6 @@ public class BlackJack extends Match {
 		}
 		return carta;
 	}
-	
-	/*protected void updateBoard(JSONMessage result) throws JSONException, IOException {
-		if (result==null) {
-			this.userWithTurn=this.players.get(1);
-		} else {
-			this.userWithTurn=this.players.get(0);
-
-		}
-		result=new BlackJackBoardMessage(this.toString());
-		//ACTUALIZA EN TODOS LOS TABLEROS?
-		Notifier.get().post(this.players, result);
-	}*/
 
 	protected void updateBoard(JSONMessage result) throws JSONException, IOException {
 		if (result==null) {
@@ -370,44 +353,61 @@ public class BlackJack extends Match {
 		return punt_real;
 		
 	}
+
 	private void turnoBanca() {
-		System.out.print("TURNO DE LA BANCA");
-		int punt_realbanca;
-		int todos_fuera=0;
-		
-		if(tapeteCartas.get(4).get(tapeteCartas.get(4).size()-1).getPalo()==null){
-			tapeteCartas.get(4).remove(tapeteCartas.get(4).size()-1);
-			tapeteCartas.get(4).add(tapeteCartas.get(4).size()-1, elegirCartaAleatoria());
-		}
-		punt_realbanca=puntuacionReal(4);
-		//NO SE HAN PASADO TODOS
-		for (int i=0;i<this.players.size();i++){
-			if(puntuacionReal(i)>21){
-				todos_fuera++;
+		try {
+			System.out.print("TURNO DE LA BANCA");
+			JSONMessage result = null;
+			int punt_realbanca;
+			int todos_fuera = 0;
+
+			if (tapeteCartas.get(4).get(tapeteCartas.get(4).size() - 1)
+					.getPalo() == null) {
+				tapeteCartas.get(4).remove(tapeteCartas.get(4).size() - 1);
+				tapeteCartas.get(4).add(tapeteCartas.get(4).size() - 1,
+						elegirCartaAleatoria());
 			}
-		}
-		if(todos_fuera<players.size() || punt_realbanca!=21){
-		while(punt_realbanca<=16){
-			//pedimos cartas
-			punt_realbanca=puntuacionReal(4);
-			}
-			if(punt_realbanca==21){
-				//ganadorbanca
-			}
-			else{
-			System.out.print("Valoramos puntuaciones jugadores");
-			ArrayList<Integer> idganadores= new ArrayList<Integer>();
-			int [] punt=new int [4];
-			for (int i=0;i<this.players.size();i++){
-				punt[i]=puntuacionReal(i);
-				if(punt[i]>puntuacionReal(4) && punt[i]<=21){
-					idganadores.add(i);
+			punt_realbanca = puntuacionReal(4);
+			// NO SE HAN PASADO TODOS
+			for (int i = 0; i < this.players.size(); i++) {
+				if (puntuacionReal(i) > 21) {
+					todos_fuera++;
 				}
-					
 			}
-	}
-		}else
-			System.out.print("ganadorBanca");
+			if (todos_fuera < players.size() || punt_realbanca != 21) {
+				while (punt_realbanca <= 16) {
+					// pedimos cartac
+					tapeteCartas.get(4).add(elegirCartaAleatoria());
+					punt_realbanca = puntuacionReal(4);
+				}
+				if (punt_realbanca == 21) {
+					// ganadorbanca y notificamos a los players que han perdido y que la nueva ronda comienza
+					JSONMessage jsPF = new BJWaitingMessage(
+							"La banca tiene Blackjack!! Esperando para iniciar nueva partida");
+					Notifier.get().post(this.players, jsPF);
+					BlackJackNewRound jsNR = new BlackJackNewRound("La nueva ronda comienza");
+					Notifier.get().post(this.players, jsPF);
+					//aqui hay que reiniciar la partida enviandole de nuevo el board
+					//
+					//
+				} else {
+					System.out.print("Valoramos puntuaciones jugadores");
+					ArrayList<Integer> idganadores = new ArrayList<Integer>();
+					int[] punt = new int[4];
+					for (int i = 0; i < this.players.size(); i++) {
+						punt[i] = puntuacionReal(i);
+						if (punt[i] > puntuacionReal(4) && punt[i] <= 21) {
+							idganadores.add(i);
+						}
+					}
+				}
+			} else {
+				System.out.print("ganadorBanca");
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
