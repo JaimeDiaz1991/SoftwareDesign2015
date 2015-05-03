@@ -47,10 +47,11 @@ public class BlackJack extends Match {
 	private int numeroJugadores;
 	private int apuestas =1;
 	private int ronda=1;
+	private Reloj timer;
 	
 	public BlackJack(Game game) {
 		super(game);
-		
+		//timer=new Reloj(this);
 		for (int i=0; i<numeroBarajas; i++){
 			barajas.add(new Baraja());
 		}
@@ -67,7 +68,14 @@ public class BlackJack extends Match {
 	@Override
 	protected void postAddUser(User user) {
 		
-		if (this.players.size()==2) {
+		if (this.players.size()<=2 && this.players.size()<=5) {
+			if(this.timer==null){
+				this.timer=new Reloj(this);
+				this.timer.run();
+			}
+			else{
+				empezarPartida();
+			}
 			try {
 				this.userWithTurn=this.players.get(0);
 				JSONMessage jsBoard=new BlackJackBoardMessage(this.toString());
@@ -408,6 +416,11 @@ public class BlackJack extends Match {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void empezarPartida() {
+		// TODO Auto-generated method stub
+		this.timer.parar();
 	}
 
 }
