@@ -17,8 +17,10 @@ import org.json.JSONObject;
 import com.maco.blackjack.jsonMessage.BJWaitingMessage;
 import com.maco.blackjack.jsonMessage.BlackJackBoardMessage;
 import com.maco.blackjack.jsonMessage.BlackJackNewRound;
+import com.maco.blackjack.jsonMessage.BlackJackSendMoney;
 import com.maco.blackjack.jsonMessage.RequestCardMessage;
 import com.maco.juegosEnGrupo.server.dominio.Carta;
+
 
 
 
@@ -48,6 +50,7 @@ public class BlackJack extends Match {
 	private int apuestas =1;
 	private int ronda=1;
 	private Reloj timer;
+	private boolean empezar=false;
 	
 	public BlackJack(Game game) {
 		super(game);
@@ -56,7 +59,6 @@ public class BlackJack extends Match {
 			barajas.add(new Baraja());
 		}
 		
-		tapetePuntuAcum = new int[5];
 		for (int i=0; i<5; i++){
 			tapeteCartas.put(i, new ArrayList<Carta>());
 			for (int j=0; j<2; j++){
@@ -67,36 +69,16 @@ public class BlackJack extends Match {
 
 	@Override
 	protected void postAddUser(User user) {
-		
-		if (this.players.size()<=2 && this.players.size()<=5) {
+		this.userWithTurn=players.get(0);
+		if (this.players.size()>=2 && this.players.size()<=3) {
 			if(this.timer==null){
 				this.timer=new Reloj(this);
-				this.timer.run();
+				this.timer.start();
 			}
-			else{
-				empezarPartida();
-			}
-			try {
-				this.userWithTurn=this.players.get(0);
-				JSONMessage jsBoard=new BlackJackBoardMessage(this.toString());
-				JSONMessage jsm=new BJWaitingMessage("Waiting for bet");
-				Notifier.get().post(this.players.get(0), jsm);
-				Notifier.get().post(this.players.get(1), jsm);
-				Notifier.get().post(this.players.get(0), jsBoard);
-				Notifier.get().post(this.players.get(1), jsBoard);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} 
-		else {
-			JSONMessage jsm=new BJWaitingMessage("Waiting for more player");
-			try {
-				Notifier.get().post(this.players.get(0), jsm);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
+		}
+		else if(this.players.size()==4){
+			empezarPartida();
 		}
 	}
 	
@@ -116,20 +98,6 @@ public class BlackJack extends Match {
 		}
 			
 		
-	}
-
-	private boolean cuentaAtras() {
-		JSONMessage jsm=new BJWaitingMessage("El juego comenzará en 2 minutos");
-		try {
-			Notifier.get().post(this.players, jsm);	
-		}catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-		}
-		try{
-	          Thread.sleep(1000);
-	    }catch(InterruptedException e){}
-		return true;
 	}
 
 	@Override
@@ -258,6 +226,7 @@ public class BlackJack extends Match {
 					userWithTurn = itUser.next();
 				}else{
 					turnoBanca();
+					break;
 				}
 			}
 			result=new BlackJackBoardMessage(this.toString());
@@ -281,7 +250,7 @@ public class BlackJack extends Match {
 	}
 
 	protected void postBet(User user, JSONObject jsoBet){
-		if(apuestas == 2){
+		if(apuestas == 2 && empezar){
 			try {
 				for (int i = 0; i < players.size(); i++) {
 					if (players.get(i).equals(user)) {
@@ -374,6 +343,9 @@ public class BlackJack extends Match {
 				tapeteCartas.get(4).remove(tapeteCartas.get(4).size() - 1);
 				tapeteCartas.get(4).add(tapeteCartas.get(4).size() - 1,
 						elegirCartaAleatoria());
+				JSONMessage result2=null;
+				result2 = new RequestCardMessage("BANCA: "+ tapeteCartas.get(4).get(tapeteCartas.get(4).size()-1)+ " :"+puntuacionReal(4));
+				Notifier.get().post(players, result2);
 			}
 			punt_realbanca = puntuacionReal(4);
 			// NO SE HAN PASADO TODOS
@@ -382,10 +354,14 @@ public class BlackJack extends Match {
 					todos_fuera++;
 				}
 			}
-			if (todos_fuera < players.size() || punt_realbanca != 21) {
+			if (todos_fuera < players.size()) {
 				while (punt_realbanca <= 16) {
 					// pedimos cartac
 					tapeteCartas.get(4).add(elegirCartaAleatoria());
+					
+					JSONMessage result2=null;
+					result2 = new RequestCardMessage("BANCA: "+ tapeteCartas.get(4).get(tapeteCartas.get(4).size()-1)+ " :"+puntuacionReal(4));
+					Notifier.get().post(players, result2);
 					punt_realbanca = puntuacionReal(4);
 				}
 				if (punt_realbanca == 21) {
@@ -393,12 +369,8 @@ public class BlackJack extends Match {
 					JSONMessage jsPF = new BJWaitingMessage(
 							"La banca tiene Blackjack!! Esperando para iniciar nueva partida");
 					Notifier.get().post(this.players, jsPF);
-					BlackJackNewRound jsNR = new BlackJackNewRound("La nueva ronda comienza");
-					Notifier.get().post(this.players, jsPF);
-					//aqui hay que reiniciar la partida enviandole de nuevo el board
-					//
-					//
-				} else {
+					
+				} else if(punt_realbanca<21){
 					System.out.print("Valoramos puntuaciones jugadores");
 					ArrayList<Integer> idganadores = new ArrayList<Integer>();
 					int[] punt = new int[4];
@@ -408,11 +380,52 @@ public class BlackJack extends Match {
 							idganadores.add(i);
 						}
 					}
+					for(int i=0;i<idganadores.size();i++){
+						JSONMessage jsED = new BlackJackSendMoney(200);
+						Notifier.get().post(players.get(idganadores.get(i)), jsED);
+					}
+				}
+				else{
+					//doblariamos a los jugadores qeu tuvieran menos de 21
+					ArrayList<Integer> idganadores = new ArrayList<Integer>();
+					int[] punt = new int[4];
+					for (int i = 0; i < this.players.size(); i++) {
+						punt[i] = puntuacionReal(i);
+						if (punt[i] <= 21) {
+							idganadores.add(i);
+						}
+					}
+					for(int i=0;i<idganadores.size();i++){
+						JSONMessage jsED = new BlackJackSendMoney(200);
+						Notifier.get().post(players.get(idganadores.get(i)), jsED);
+					}
 				}
 			} else {
-				System.out.print("ganadorBanca");
+				System.out.print("Todos los jugadores se han pasado");
 			}
-		} catch (IOException e) {
+			//aqui hay que reiniciar la partida enviandole de nuevo el board
+			//
+			barajas = new ArrayList<Baraja>();
+			for (int i=0; i<this.numeroBarajas; i++){
+				barajas.add(new Baraja());
+			}
+			tapeteCartas = new Hashtable<Integer,ArrayList<Carta>>();
+			for (int i=0; i<5; i++){
+				tapeteCartas.put(i, new ArrayList<Carta>());
+				for (int j=0; j<2; j++){
+						tapeteCartas.get(i).add(new Carta());		
+				}
+			}
+			apuestas=0;
+			empezar=false;
+			this.userWithTurn=players.get(0);
+			JSONMessage jsBoard=new BlackJackBoardMessage(this.toString());
+			Notifier.get().post(this.players, jsBoard);
+			
+			BlackJackNewRound jsNR = new BlackJackNewRound("La nueva ronda comienza");
+			Notifier.get().post(this.players, jsNR);
+			
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -421,6 +434,19 @@ public class BlackJack extends Match {
 	public void empezarPartida() {
 		// TODO Auto-generated method stub
 		this.timer.parar();
+		empezar=true;
+		try {
+			this.userWithTurn=this.players.get(0);
+			JSONMessage jsBoard=new BlackJackBoardMessage(this.toString());
+			JSONMessage jsm=new BJWaitingMessage("Waiting for bet");
+			Notifier.get().post(this.players.get(0), jsm);
+			Notifier.get().post(this.players.get(1), jsm);
+			Notifier.get().post(this.players.get(0), jsBoard);
+			Notifier.get().post(this.players.get(1), jsBoard);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
