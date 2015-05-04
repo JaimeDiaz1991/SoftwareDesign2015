@@ -301,9 +301,7 @@ public class BlackJack extends Match {
 		if(jsoRec!=null){
 			JSONMessage result = null;
 			updateBoard(result);
-		}
-		
-		
+		}		
 	}
 	private int puntuacionReal(int idjugador){
 		int acumu = 0, acumu2 = 0, punt_real=-1;
@@ -366,7 +364,7 @@ public class BlackJack extends Match {
 				}
 				if (punt_realbanca == 21) {
 					// ganadorbanca y notificamos a los players que han perdido y que la nueva ronda comienza
-					JSONMessage jsPF = new BJWaitingMessage(
+					RequestCardMessage jsPF = new RequestCardMessage(
 							"La banca tiene Blackjack!! Esperando para iniciar nueva partida");
 					Notifier.get().post(this.players, jsPF);
 					
@@ -383,6 +381,8 @@ public class BlackJack extends Match {
 					for(int i=0;i<idganadores.size();i++){
 						JSONMessage jsED = new BlackJackSendMoney(200);
 						Notifier.get().post(players.get(idganadores.get(i)), jsED);
+						RequestCardMessage jsPF = new RequestCardMessage("Has ganado 200");
+						Notifier.get().post(this.players, jsPF);
 					}
 				}
 				else{
@@ -416,7 +416,7 @@ public class BlackJack extends Match {
 						tapeteCartas.get(i).add(new Carta());		
 				}
 			}
-			apuestas=0;
+			apuestas=1;
 			empezar=false;
 			this.userWithTurn=players.get(0);
 			JSONMessage jsBoard=new BlackJackBoardMessage(this.toString());
@@ -424,7 +424,7 @@ public class BlackJack extends Match {
 			
 			BlackJackNewRound jsNR = new BlackJackNewRound("La nueva ronda comienza");
 			Notifier.get().post(this.players, jsNR);
-			
+			empezarPartida();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -439,10 +439,8 @@ public class BlackJack extends Match {
 			this.userWithTurn=this.players.get(0);
 			JSONMessage jsBoard=new BlackJackBoardMessage(this.toString());
 			JSONMessage jsm=new BJWaitingMessage("Waiting for bet");
-			Notifier.get().post(this.players.get(0), jsm);
-			Notifier.get().post(this.players.get(1), jsm);
-			Notifier.get().post(this.players.get(0), jsBoard);
-			Notifier.get().post(this.players.get(1), jsBoard);
+			Notifier.get().post(this.players, jsm);
+			Notifier.get().post(this.players, jsBoard);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
