@@ -7,13 +7,14 @@ public class Reloj extends Thread {
 	public Reloj(BlackJack partida) {
 		super();
 		this.partida = partida;
-		this.horaComienzo = System.currentTimeMillis()+1000;
+		this.horaComienzo = System.currentTimeMillis()+10000;
 		this.parado = false;
 	}
 	public void run(){
-		while(System.currentTimeMillis()+1000<this.horaComienzo){
+		while(System.currentTimeMillis()<this.horaComienzo){
 			try{
-				Thread.sleep(50000);
+				Thread.sleep(1000);
+				System.out.print(this.horaComienzo);
 			}
 			catch(Exception e){}
 		}
