@@ -3,6 +3,7 @@ package com.maco.juegosEnGrupo.server.actions;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.maco.juegosEnGrupo.server.dominio.BlackJack;
 import com.maco.juegosEnGrupo.server.dominio.Game;
 import com.maco.juegosEnGrupo.server.dominio.Match;
 import com.opensymphony.xwork2.ActionContext;
@@ -32,7 +33,9 @@ public class RequestCard extends JSONAction {
 			Game g=manager.findGameById(idGame);
 			Match match=g.findMatchById(idMatch, idUser);
 			match.requestCard(user, this.jsoRec);
-			DAOBlackJack.registrarMovimiento(idUser,"PedirCarta", idMatch, idGame);
+			String mov="\"Planted\"";
+			String desc="\""+jsoRec.toString()+"\"";
+			BlackJack.insert_mov(idUser,mov, idMatch, idGame,desc);
 			return SUCCESS;
 		} catch (Exception e) {
 			this.exception=e;

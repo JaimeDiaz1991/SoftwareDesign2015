@@ -1,6 +1,7 @@
 package com.maco.juegosEnGrupo.server.dominio;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -29,9 +30,14 @@ import com.maco.juegosEnGrupo.server.dominio.Carta;
 
 
 
+
+
+
 import edu.uclm.esi.common.jsonMessages.ErrorMessage;
 import edu.uclm.esi.common.jsonMessages.JSONMessage;
 import edu.uclm.esi.common.server.domain.User;
+import edu.uclm.esi.common.server.persistence.DAOBlackJack;
+import edu.uclm.esi.common.server.persistence.DAOUser;
 import edu.uclm.esi.common.server.sockets.Notifier;
 
 import java.util.*;
@@ -447,6 +453,10 @@ public class BlackJack extends Match {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static void insert_mov(int iduser, String mov, int idpartida, int idgame,String desc) throws SQLException {
+		DAOBlackJack.registrarMovimiento(iduser, mov,idpartida,idgame,desc);
 	}
 
 }
