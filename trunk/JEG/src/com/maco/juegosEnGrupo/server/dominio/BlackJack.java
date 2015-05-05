@@ -51,8 +51,6 @@ public class BlackJack extends Match {
 	public static ArrayList<Baraja> barajas= new ArrayList<Baraja>();
 	private User userWithTurn;
 	private Hashtable <Integer,ArrayList<Carta>> tapeteCartas= new Hashtable<Integer,ArrayList<Carta>>();
-	private int [] tapetePuntuAcum;
-	private int numeroJugadores;
 	private int apuestas =1;
 	private int ronda=1;
 	private Reloj timer;
@@ -60,7 +58,6 @@ public class BlackJack extends Match {
 	
 	public BlackJack(Game game) {
 		super(game);
-		//timer=new Reloj(this);
 		for (int i=0; i<numeroBarajas; i++){
 			barajas.add(new Baraja());
 		}
@@ -76,7 +73,7 @@ public class BlackJack extends Match {
 	@Override
 	protected void postAddUser(User user) {
 		this.userWithTurn=players.get(0);
-		if (this.players.size()>=2 && this.players.size()<=3) {
+		if (this.players.size()>=2) {
 			if(this.timer==null){
 				this.timer=new Reloj(this);
 				this.timer.start();
@@ -405,6 +402,9 @@ public class BlackJack extends Match {
 						JSONMessage jsED = new BlackJackSendMoney(200);
 						Notifier.get().post(players.get(idganadores.get(i)), jsED);
 						RequestCardMessage jsPF = new RequestCardMessage("Has ganado 200");
+						int fichas=200;
+						insert_ranking(players.get(idganadores.get(i)).getId(), this.game.getId(),fichas);
+						this.game.getId();
 						Notifier.get().post(this.players, jsPF);
 					}
 				}
@@ -457,6 +457,9 @@ public class BlackJack extends Match {
 	
 	public static void insert_mov(int iduser, String mov, int idpartida, int idgame,String desc) throws SQLException {
 		DAOBlackJack.registrarMovimiento(iduser, mov,idpartida,idgame,desc);
+	}
+	public static void insert_ranking(int iduser, int idgame,int fichas) throws SQLException {
+		DAOBlackJack.registrarRanking(iduser,idgame,fichas);
 	}
 
 }

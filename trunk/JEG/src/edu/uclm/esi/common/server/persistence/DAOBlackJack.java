@@ -11,7 +11,21 @@ public class DAOBlackJack {
 	public static void registrarMovimiento(int iduser, String mov, int idpartida, int idgame,String desc) throws SQLException {
 		Connection bd=Broker.get().getDBPrivilegiada();
 		try {
-			String sql="insert into movimiento (tipo,idpartida,iduser,idgame) VALUES ("+mov+","+idpartida+","+iduser+","+idgame+","+desc+")";
+			String sql="insert into movimiento (tipo,idpartida,iduser,idgame,descripcion) VALUES ("+mov+","+idpartida+","+iduser+","+idgame+","+desc+")";
+			Statement statement=(Statement) bd.createStatement();
+			statement.execute(sql);
+		}
+		catch (SQLException e) {
+			throw e;
+		}
+		finally {
+			bd.close();
+		}
+	}
+	public static void registrarRanking(int iduser, int idgame,int fichas) throws SQLException {
+		Connection bd=Broker.get().getDBPrivilegiada();
+		try {
+			String sql="insert into ranking (idUser,idGame,fichas) VALUES ("+iduser+","+idgame+","+fichas+")";
 			Statement statement=(Statement) bd.createStatement();
 			statement.execute(sql);
 		}
