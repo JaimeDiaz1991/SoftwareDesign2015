@@ -21,7 +21,7 @@ public abstract class Match {
 	}
 
 	public boolean isComplete() {
-		return this.players.size()==game.getPlayersMin();
+		return this.players.size()==game.getPlayersMax();
 	}
 
 	public void add(User user) throws Exception {
