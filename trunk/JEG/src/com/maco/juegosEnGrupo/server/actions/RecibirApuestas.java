@@ -13,6 +13,7 @@ import edu.uclm.esi.common.jsonMessages.OKMessage;
 import edu.uclm.esi.common.server.actions.JSONAction;
 import edu.uclm.esi.common.server.domain.Manager;
 import edu.uclm.esi.common.server.domain.User;
+import edu.uclm.esi.common.server.persistence.DAOBlackJack;
 @SuppressWarnings("serial")
 public class RecibirApuestas extends JSONAction {
 	private int idUser;
@@ -30,6 +31,7 @@ public class RecibirApuestas extends JSONAction {
 			Game g=manager.findGameById(idGame);
 			Match match=g.findMatchById(idMatch, idUser);
 			match.bet(user, this.jsoBet);
+			//DAOBlackJack.registrarMovimiento(idUser,"Apuesta", idMatch, idGame);
 			return SUCCESS;
 		} catch (Exception e) {
 			this.exception=e;
