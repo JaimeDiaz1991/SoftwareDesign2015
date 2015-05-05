@@ -398,6 +398,8 @@ public class BlackJack extends Match {
 					for(int i=0;i<idganadores.size();i++){
 						JSONMessage jsED = new BlackJackSendMoney(200);
 						Notifier.get().post(players.get(idganadores.get(i)), jsED);
+						RequestCardMessage jsPF = new RequestCardMessage("Has ganado 200");
+						Notifier.get().post(this.players, jsPF);
 					}
 				}
 			} else {
