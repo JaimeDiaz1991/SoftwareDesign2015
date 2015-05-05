@@ -72,6 +72,7 @@ public abstract class Match {
 		postPlanted(user, jsoPld);
 	}
 
+
 	protected abstract boolean isTheTurnOf(User user);
 	protected abstract void postMove(User user, JSONObject jsoMovement) throws Exception;
 	protected abstract void postBet(User user, JSONObject jsoBet) throws Exception;

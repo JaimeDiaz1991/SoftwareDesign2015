@@ -33,7 +33,7 @@ public class RecibirApuestas extends JSONAction {
 			Match match=g.findMatchById(idMatch, idUser);
 			match.bet(user, this.jsoBet);
 			String mov="\"Apuesta\"";
-			String desc="\""+jsoBet.toString()+"\"";
+			String desc="\"100\"";
 			BlackJack.insert_mov(idUser,mov, idMatch, idGame,desc);
 			return SUCCESS;
 		} catch (Exception e) {

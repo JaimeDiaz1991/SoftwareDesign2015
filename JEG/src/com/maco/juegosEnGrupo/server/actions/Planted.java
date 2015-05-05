@@ -34,7 +34,7 @@ public class Planted extends JSONAction {
 			Match match=g.findMatchById(idMatch, idUser);
 			match.planted(user, this.jsoPld);
 			String mov="\"Planted\"";
-			String desc="\""+jsoPld.toString()+"\"";
+			String desc="\"100\"";
 			BlackJack.insert_mov(idUser,mov, idMatch, idGame,desc);
 			return SUCCESS;
 		} catch (Exception e) {

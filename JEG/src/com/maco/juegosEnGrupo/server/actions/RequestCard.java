@@ -33,8 +33,8 @@ public class RequestCard extends JSONAction {
 			Game g=manager.findGameById(idGame);
 			Match match=g.findMatchById(idMatch, idUser);
 			match.requestCard(user, this.jsoRec);
-			String mov="\"Planted\"";
-			String desc="\""+jsoRec.toString()+"\"";
+			String mov="\"RequestCard\"";
+			String desc="\""+jsoRec.get("text")+"\"";
 			BlackJack.insert_mov(idUser,mov, idMatch, idGame,desc);
 			return SUCCESS;
 		} catch (Exception e) {
