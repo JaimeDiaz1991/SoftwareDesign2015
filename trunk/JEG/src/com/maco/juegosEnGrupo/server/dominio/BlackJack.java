@@ -73,7 +73,7 @@ public class BlackJack extends Match {
 	@Override
 	protected void postAddUser(User user) {
 		this.userWithTurn=players.get(0);
-		if (this.players.size()>=2) {
+		if (this.players.size()>=2 && this.players.size()<4) {
 			if(this.timer==null){
 				this.timer=new Reloj(this);
 				this.timer.start();
