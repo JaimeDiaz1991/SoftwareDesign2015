@@ -56,29 +56,29 @@ public abstract class Match {
 			throw new Exception("It's not your turn");
 		postMove(user, jsoMovement);
 	}
-	public void bet(User user, JSONObject jsoBet) throws Exception {
+	public void bet(User user, JSONObject jsoBet,int idmatch) throws Exception {
 		if (!isTheTurnOf(user))
 			throw new Exception("It's not your turn");
-		postBet(user, jsoBet);
+		postBet(user, jsoBet,idmatch);
 	}
-	public void requestCard(User user, JSONObject jsoRec) throws Exception {
+	public void requestCard(User user, JSONObject jsoRec, int idMatch) throws Exception {
 		if (!isTheTurnOf(user))
 			throw new Exception("It's not your turn");
-		postRequestCard(user, jsoRec);
+		postRequestCard(user, jsoRec,idMatch);
 	}
-	public void planted(User user, JSONObject jsoPld) throws Exception {
+	public void planted(User user, JSONObject jsoPld,int idmatch) throws Exception {
 		if (!isTheTurnOf(user))
 			throw new Exception("It's not your turn");
-		postPlanted(user, jsoPld);
+		postPlanted(user, jsoPld,idmatch);
 	}
 
 
 	protected abstract boolean isTheTurnOf(User user);
 	protected abstract void postMove(User user, JSONObject jsoMovement) throws Exception;
-	protected abstract void postBet(User user, JSONObject jsoBet) throws Exception;
+	protected abstract void postBet(User user, JSONObject jsoBet,int idmatch) throws Exception;
 	protected abstract void updateBoard(int row, int col, JSONMessage result) throws JSONException, IOException;
-	protected abstract void updateBoard(JSONMessage result) throws JSONException, IOException;
-	protected abstract void postRequestCard(User user, JSONObject jsoRec) throws Exception;
-	protected abstract void postPlanted(User user, JSONObject jsoRec) throws Exception;
+	protected abstract void updateBoard(JSONMessage result, int idmatch) throws JSONException, IOException;
+	protected abstract void postRequestCard(User user, JSONObject jsoRec, int idMatch) throws Exception;
+	protected abstract void postPlanted(User user, JSONObject jsoRec,int idmatch) throws Exception;
 }
 

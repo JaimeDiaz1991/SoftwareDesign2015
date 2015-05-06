@@ -33,6 +33,10 @@ import com.maco.juegosEnGrupo.server.dominio.Carta;
 
 
 
+
+
+
+
 import edu.uclm.esi.common.jsonMessages.ErrorMessage;
 import edu.uclm.esi.common.jsonMessages.JSONMessage;
 import edu.uclm.esi.common.server.domain.User;
@@ -135,6 +139,7 @@ public class BlackJack extends Match {
 				}
 				r+=this.userWithTurn.getEmail();
 			}
+			//r+=this.players.get(0).getEmail();
 			return r;
 		}
 
@@ -144,7 +149,7 @@ public class BlackJack extends Match {
 		return this.userWithTurn.equals(user);
 	}
 
-	protected void postRequestCard(User user, JSONObject jsoRequestCard) throws Exception {
+	protected void postRequestCard(User user, JSONObject jsoRequestCard, int idMatch) throws Exception {
 		if (!jsoRequestCard.get("type").equals(RequestCardMessage.class.getSimpleName())) {
 			throw new Exception("Can't request more cards");
 		}
@@ -169,12 +174,23 @@ public class BlackJack extends Match {
 		if(calcularSumaCartas(contador)<=21){
 			result2 = new RequestCardMessage("NUEVA CARTA: "+ carta.toString());
 			Notifier.get().post(userWithTurn, result2);
-			updateBoard(result2);
+			String mov="\"RequestCard\"";
+			String desc="\""+carta.toString()+"\"";
+			insert_mov(user.getId(),mov,idMatch,this.game.getId(), desc);
+			updateBoard(result2, idMatch);
 		}
 		else{
 			result2 = new RequestCardMessage("NUEVA CARTA: "+ carta.toString()+" Te has pasado pollo");
 			Notifier.get().post(userWithTurn, result2);
-			updateBoard(result);
+			String mov="\"RequestCard\"";
+			String desc="\""+carta.toString()+"\"";
+			insert_mov(user.getId(),mov,idMatch,this.game.getId(), desc);
+			updateBoard(result, idMatch);
+			try{
+				Thread.sleep(5000);
+				}catch(Exception e){
+					e.printStackTrace();
+				}
 		}
 	}
 
@@ -217,8 +233,8 @@ public class BlackJack extends Match {
 		}
 		return carta;
 	}
-
-	protected void updateBoard(JSONMessage result) throws JSONException, IOException {
+	@Override
+	protected void updateBoard(JSONMessage result, int idmatch) throws JSONException, IOException {
 		if (result==null) {
 			Iterator<User> itUser;
 			itUser = players.iterator();
@@ -228,7 +244,7 @@ public class BlackJack extends Match {
 				if(u == userWithTurn && itUser.hasNext()){
 					userWithTurn = itUser.next();
 				}else{
-					turnoBanca();
+					turnoBanca(idmatch);
 					break;
 				}
 			}
@@ -245,14 +261,7 @@ public class BlackJack extends Match {
 	protected void postMove(User user, JSONObject jsoMovement) throws Exception {	
 	}
 
-	@Override
-	protected void updateBoard(int row, int col, JSONMessage result)
-			throws JSONException, IOException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	protected void postBet(User user, JSONObject jsoBet){
+	protected void postBet(User user, JSONObject jsoBet,int idmatch){
 		if(apuestas == 2 && empezar){
 			try {
 				for (int i = 0; i < players.size(); i++) {
@@ -290,7 +299,7 @@ public class BlackJack extends Match {
 					}
 				}
 				JSONMessage result = null;
-				updateBoard(result);
+				updateBoard(result,idmatch);
 				JSONMessage jsm=new BJWaitingMessage("Waiting for bet of other players");	
 				Notifier.get().post(this.players.get(0), jsm);
 			} catch (Exception e) {
@@ -300,10 +309,10 @@ public class BlackJack extends Match {
 	}
 
 	@Override
-	protected void postPlanted(User user, JSONObject jsoRec) throws Exception {
+	protected void postPlanted(User user, JSONObject jsoRec,int idmatch) throws Exception {
 		if(jsoRec!=null){
 			JSONMessage result = null;
-			updateBoard(result);
+			updateBoard(result,idmatch);
 		}		
 	}
 	private int puntuacionReal(int idjugador){
@@ -332,7 +341,7 @@ public class BlackJack extends Match {
 		
 	}
 
-	private void turnoBanca() {
+	private void turnoBanca(int idmatch) {
 		try {
 			System.out.print("TURNO DE LA BANCA");
 			JSONMessage result = null;
@@ -346,7 +355,10 @@ public class BlackJack extends Match {
 						elegirCartaAleatoria());
 				JSONMessage result2=null;
 				result2 = new RequestCardMessage("BANCA: "+ tapeteCartas.get(4).get(tapeteCartas.get(4).size()-1)+ " :"+puntuacionReal(4));
-				Notifier.get().post(players, result2);
+				for (int i=0;i<players.size();i++){
+					Notifier.get().post(players.get(i), result2);
+					updateBoard(result2,idmatch);
+				}
 			}
 			punt_realbanca = puntuacionReal(4);
 			// NO SE HAN PASADO TODOS
@@ -357,19 +369,29 @@ public class BlackJack extends Match {
 			}
 			if (todos_fuera < players.size()) {
 				while (punt_realbanca <= 16) {
+					try{
+						Thread.sleep(5000);
+						}catch(Exception e){
+							e.printStackTrace();
+						}
 					// pedimos cartac
 					tapeteCartas.get(4).add(elegirCartaAleatoria());
 					
 					JSONMessage result2=null;
 					result2 = new RequestCardMessage("BANCA: "+ tapeteCartas.get(4).get(tapeteCartas.get(4).size()-1)+ " :"+puntuacionReal(4));
-					Notifier.get().post(players, result2);
+					for (int i=0;i<players.size();i++){
+					Notifier.get().post(players.get(i), result2);
+					updateBoard(result2,idmatch);
+					}
 					punt_realbanca = puntuacionReal(4);
 				}
 				if (punt_realbanca == 21) {
 					// ganadorbanca y notificamos a los players que han perdido y que la nueva ronda comienza
 					RequestCardMessage jsPF = new RequestCardMessage(
 							"La banca tiene Blackjack!! Esperando para iniciar nueva partida");
-					Notifier.get().post(this.players, jsPF);
+					for (int i=0;i<players.size();i++)
+						Notifier.get().post(players.get(i), jsPF);
+					
 					
 				} else if(punt_realbanca<21){
 					System.out.print("Valoramos puntuaciones jugadores");
@@ -385,8 +407,14 @@ public class BlackJack extends Match {
 						JSONMessage jsED = new BlackJackSendMoney(200);
 						Notifier.get().post(players.get(idganadores.get(i)), jsED);
 						RequestCardMessage jsPF = new RequestCardMessage("Has ganado 200");
-						Notifier.get().post(this.players, jsPF);
+						insert_ranking(players.get(idganadores.get(i)).getId(), this.game.getId(),200,idmatch);
+						Notifier.get().post(players.get(idganadores.get(i)), jsPF);
 					}
+					try{
+						Thread.sleep(5000);
+						}catch(Exception e){
+							e.printStackTrace();
+						}
 				}
 				else{
 					//doblariamos a los jugadores qeu tuvieran menos de 21
@@ -403,10 +431,14 @@ public class BlackJack extends Match {
 						Notifier.get().post(players.get(idganadores.get(i)), jsED);
 						RequestCardMessage jsPF = new RequestCardMessage("Has ganado 200");
 						int fichas=200;
-						insert_ranking(players.get(idganadores.get(i)).getId(), this.game.getId(),fichas);
-						this.game.getId();
-						Notifier.get().post(this.players, jsPF);
+						insert_ranking(players.get(idganadores.get(i)).getId(), this.game.getId(),fichas,idmatch);
+						Notifier.get().post(players.get(idganadores.get(i)), jsPF);
 					}
+					try{
+						Thread.sleep(5000);
+						}catch(Exception e){
+							e.printStackTrace();
+						}
 				}
 			} else {
 				System.out.print("Todos los jugadores se han pasado");
@@ -424,12 +456,16 @@ public class BlackJack extends Match {
 						tapeteCartas.get(i).add(new Carta());		
 				}
 			}
+			try{
+				Thread.sleep(5000);
+				}catch(Exception e){
+					e.printStackTrace();
+				}
 			apuestas=1;
 			empezar=false;
 			this.userWithTurn=players.get(0);
 			JSONMessage jsBoard=new BlackJackBoardMessage(this.toString());
 			Notifier.get().post(this.players, jsBoard);
-			
 			BlackJackNewRound jsNR = new BlackJackNewRound("La nueva ronda comienza");
 			Notifier.get().post(this.players, jsNR);
 			empezarPartida();
@@ -458,8 +494,15 @@ public class BlackJack extends Match {
 	public static void insert_mov(int iduser, String mov, int idpartida, int idgame,String desc) throws SQLException {
 		DAOBlackJack.registrarMovimiento(iduser, mov,idpartida,idgame,desc);
 	}
-	public static void insert_ranking(int iduser, int idgame,int fichas) throws SQLException {
-		DAOBlackJack.registrarRanking(iduser,idgame,fichas);
+	public static void insert_ranking(int iduser, int idgame,int fichas,int idpartida) throws SQLException {
+		DAOBlackJack.registrarRanking(iduser,idgame,fichas,idpartida);
+	}
+
+	@Override
+	protected void updateBoard(int row, int col, JSONMessage result)
+			throws JSONException, IOException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
