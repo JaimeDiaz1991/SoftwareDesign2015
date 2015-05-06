@@ -31,7 +31,7 @@ public class RecibirApuestas extends JSONAction {
 				throw new Exception("Usuario no autenticado");
 			Game g=manager.findGameById(idGame);
 			Match match=g.findMatchById(idMatch, idUser);
-			match.bet(user, this.jsoBet);
+			match.bet(user, this.jsoBet,idMatch);
 			String mov="\"Apuesta\"";
 			String desc="\"100\"";
 			BlackJack.insert_mov(idUser,mov, idMatch, idGame,desc);

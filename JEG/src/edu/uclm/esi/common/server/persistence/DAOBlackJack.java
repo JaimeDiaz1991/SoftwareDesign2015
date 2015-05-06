@@ -22,10 +22,10 @@ public class DAOBlackJack {
 			bd.close();
 		}
 	}
-	public static void registrarRanking(int iduser, int idgame,int fichas) throws SQLException {
+	public static void registrarRanking(int iduser, int idgame,int fichas,int idpartida) throws SQLException {
 		Connection bd=Broker.get().getDBPrivilegiada();
 		try {
-			String sql="insert into ranking (idUser,idGame,fichas) VALUES ("+iduser+","+idgame+","+fichas+")";
+			String sql="insert into ranking (idUser,idGame,fichas,idpartida) VALUES ("+iduser+","+idgame+","+fichas+","+idpartida+")";
 			Statement statement=(Statement) bd.createStatement();
 			statement.execute(sql);
 		}

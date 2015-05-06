@@ -32,7 +32,7 @@ public class RequestCard extends JSONAction {
 				throw new Exception("Usuario no autenticado");
 			Game g=manager.findGameById(idGame);
 			Match match=g.findMatchById(idMatch, idUser);
-			match.requestCard(user, this.jsoRec);
+			match.requestCard(user, this.jsoRec,this.idMatch);
 			String mov="\"RequestCard\"";
 			String desc="\""+jsoRec.get("text")+"\"";
 			BlackJack.insert_mov(idUser,mov, idMatch, idGame,desc);

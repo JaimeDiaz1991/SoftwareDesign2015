@@ -32,7 +32,7 @@ public class Planted extends JSONAction {
 				throw new Exception("Usuario no autenticado");
 			Game g=manager.findGameById(idGame);
 			Match match=g.findMatchById(idMatch, idUser);
-			match.planted(user, this.jsoPld);
+			match.planted(user, this.jsoPld,idMatch);
 			String mov="\"Planted\"";
 			String desc="\"100\"";
 			BlackJack.insert_mov(idUser,mov, idMatch, idGame,desc);

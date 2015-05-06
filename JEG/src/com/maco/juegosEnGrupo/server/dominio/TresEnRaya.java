@@ -132,27 +132,27 @@ public class TresEnRaya extends Match {
 	}
 
 	@Override
-	protected void updateBoard(JSONMessage result) throws JSONException,
+	protected void updateBoard(JSONMessage result, int idmatch) throws JSONException,
 			IOException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	protected void postBet(User user, JSONObject jsoBet) throws Exception {
+	protected void postBet(User user, JSONObject jsoBet,int idmatch) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	protected void postRequestCard(User user, JSONObject jsoRec)
+	protected void postRequestCard(User user, JSONObject jsoRec, int idMatch)
 			throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	protected void postPlanted(User user, JSONObject jsoRec) throws Exception {
+	protected void postPlanted(User user, JSONObject jsoRec,int idmatch) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
